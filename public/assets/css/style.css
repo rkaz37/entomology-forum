@@ -1,0 +1,26 @@
+.navbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    
+}
+
+body{
+    font-family: 'Courier New', Courier, monospace;
+}
+
+
+
+.container{
+    border-radius: 30px;
+    border-width: 3px;
+    border-style: solid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+    background-color: aqua;
+}
