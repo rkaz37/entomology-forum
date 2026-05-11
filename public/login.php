@@ -1,6 +1,5 @@
 <?php
-require_once '../app/core/App.php';
-App::init();
+    include_once 'partials/header.php';
 
 $error = null;
 

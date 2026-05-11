@@ -24,7 +24,7 @@
                             */
                     ?>
 
-                    <div class='container'>
+                    <div class='container post'>
                         <figure>
                             <a href="post.php?id=<?php echo $p->id; ?>">
                                 

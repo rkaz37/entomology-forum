@@ -26,8 +26,11 @@
                 <a href="admin.php">MOD MENU</a>
         <?php endif; ?>
         <?php if (Auth::check()): ?>
-                <a href="logout.php">logout</a>
+                <a href="profile.php"><?php echo $_SESSION['username']; ?></a>
+        <?php endif; ?>
+        <?php if (Auth::check()): ?>
+                <a class="button" id="log" href="logout.php">logout</a>
         <?php else: ?>
-                <a href="login.php">login</a>
+                <a class="button" id="log" href="login.php">login</a>
         <?php endif; ?>
     </div>

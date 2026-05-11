@@ -44,7 +44,7 @@ class Post
             $stmt->execute(['id' => $id]);
             return $stmt->fetch();
         } catch (PDOException $e) {
-            Helper::log("Post::find ERROR: " . $e->getMessage(), 'ERROR');
+            //Helper::log("Post::find ERROR: " . $e->getMessage(), 'ERROR');
             return false;
         }
     }
@@ -74,7 +74,7 @@ class Post
             return true;
         } catch (PDOException $e) {
             if ($this->db->inTransaction()) $this->db->rollBack();
-            Helper::log("Post::create ERROR: " . $e->getMessage(), 'ERROR');
+            //Helper::log("Post::create ERROR: " . $e->getMessage(), 'ERROR');
             return false;
         }
     }
@@ -104,7 +104,7 @@ class Post
             return true;
         } catch (PDOException $e) {
             if ($this->db->inTransaction()) $this->db->rollBack();
-            Helper::log("Post::update ERROR: " . $e->getMessage(), 'ERROR');
+            //Helper::log("Post::update ERROR: " . $e->getMessage(), 'ERROR');
             return false;
         }
     }
@@ -114,7 +114,7 @@ class Post
         try {
             return $this->db->prepare("DELETE FROM posts WHERE id = :id")->execute(['id' => $id]);
         } catch (PDOException $e) {
-            Helper::log("Post::delete ERROR: " . $e->getMessage(), 'ERROR');
+            //Helper::log("Post::delete ERROR: " . $e->getMessage(), 'ERROR');
             return false;
         }
     }
@@ -126,7 +126,7 @@ class Post
             $stmt->execute(['post_id' => $postId]);
             return $stmt->fetchAll(PDO::FETCH_COLUMN);
         } catch (PDOException $e) {
-            Helper::log("Post::getCategoryIdsByPost ERROR: " . $e->getMessage(), 'ERROR');
+            //Helper::log("Post::getCategoryIdsByPost ERROR: " . $e->getMessage(), 'ERROR');
             return [];
         }
     }

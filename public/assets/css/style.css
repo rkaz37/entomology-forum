@@ -1,12 +1,32 @@
 .navbar{
     display: flex;
-    align-items: center;
-    justify-content: space-around;
+    align-items:center;
+    justify-content:start;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.navbar a{
+    margin-left: 10px;
+    margin-right: 10px;
     
 }
 
+#log{
+    flex-direction: row-reverse;
+}
+
+
 body{
     font-family: 'Courier New', Courier, monospace;
+    color: crimson;
+    background-color:black;
+    
+}
+
+a{
+    text-decoration: none;
+    color: crimson;
 }
 
 
@@ -16,4 +36,18 @@ body{
     border-width: 3px;
     border-style: solid;
     padding: 10px;
+}
+
+.button{
+    border-radius: 15px;
+    border-width: 3px;
+    padding: 3px;
+    border-style: solid;
+    border-color: crimson;
+    background-color: crimson;
+    color: black;
+}
+
+.post{
+    margin: 5px;
 }
