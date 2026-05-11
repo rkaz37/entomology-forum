@@ -2,7 +2,6 @@
     require_once '../app/core/App.php';
     App::init();
 
-    session_start();
     //Auth::requireLogin();
     $isAdmin = Auth::isAdmin();
 
@@ -18,13 +17,17 @@
     
 </head>
 <body>
-    <div class="navbar">
+    <div class="navbar container">
         <a href="home.php">Home</a>
         <a href="forum.php">Forum</a>
         <a href="contact.php">Contact us</a>
-        <a href="login.php">LOGIN</a>
 
         <?php if ($isAdmin): ?>
                 <a href="admin.php">MOD MENU</a>
+        <?php endif; ?>
+        <?php if (Auth::check()): ?>
+                <a href="logout.php">logout</a>
+        <?php else: ?>
+                <a href="login.php">login</a>
         <?php endif; ?>
     </div>

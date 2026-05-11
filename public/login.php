@@ -5,15 +5,15 @@ App::init();
 $error = null;
 
 if (Auth::check()) {
-    Redirect::redirect('admin.php');
+    Redirect::redirect('home.php');
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = trim($_POST['email'] ?? '');
+    $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
 
-    if (Auth::login($email, $password)) {
-        Redirect::redirect('admin.php');
+    if (Auth::login($username, $password)) {
+        Redirect::redirect('home.php');
     }
 
     $error = 'Nesprávny email alebo heslo.';
@@ -22,13 +22,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <form class="login-form" method="POST">
     <div>
-        <label class="form-label" for="email">Email Address</label>
-                        <input type="email"
-                            id="email"
-                            name="email"
+        <label class="form-label" for="username">username</label>
+                        <input type="text"
+                            id="username"
+                            name="username"
                             class="form-input"
-                            placeholder="you@example.com"
-                            value="<?= htmlspecialchars($_POST['email'] ?? '') ?>"
+                            placeholder="username"
+                            value="<?= htmlspecialchars($_POST['username'] ?? '') ?>"
                             required
                         >
 

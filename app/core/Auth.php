@@ -1,13 +1,13 @@
 <?php
 class Auth
 {
-    public static function login(string $email, string $password): bool
+    public static function login(string $username, string $password): bool
     {
         try {
             $db = (new Database())->getConnection();
 
-            $stmt = $db->prepare("SELECT * FROM users WHERE email = :email LIMIT 1");
-            $stmt->execute(['email' => $email]);
+            $stmt = $db->prepare("SELECT * FROM users WHERE username = :username LIMIT 1");
+            $stmt->execute(['username' => $username]);
 
             $user = $stmt->fetch();
 
@@ -46,7 +46,7 @@ class Auth
         }
     }
 
-    public static function id(): ?int
+    public static function id(): int
     {
         return $_SESSION['user_id'] ?? null;
     }

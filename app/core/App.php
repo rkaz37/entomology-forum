@@ -4,6 +4,9 @@ class App
 {
     public static function init(): void
     {
+        if(session_status() === PHP_SESSION_NONE){
+            session_start();
+        }
         // Core
         require_once __DIR__ . '/Redirect.php';
         require_once __DIR__ . '/Database.php';
