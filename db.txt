@@ -46,7 +46,8 @@ INSERT INTO users (username, email, password, role, bio) VALUES
 
 
 INSERT INTO posts (title, content, status, user_id, published_at) VALUES
-('troll post', 'blablablablablablablablablablablablablabla', 'published', 2, '2026-03-20 10:00:00');
+('troll post', 'blablablablablablablablablablablablablabla', 'published', 2, '2026-03-20 10:00:00'),
+('ADMIN POST', 'blablablablablablablablablablablablablablaaaaaaaaaaa', 'published', 1, '2026-03-20 10:00:00');
 
 
 INSERT INTO contacts (username, email, message) VALUES
