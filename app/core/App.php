@@ -17,7 +17,7 @@ class App
         //require_once __DIR__ . '/../models/Category.php';
         require_once __DIR__ . '/../models/Contact.php';
         require_once __DIR__ . '/../models/Post.php';
-        //require_once __DIR__ . '/../models/User.php';
+        require_once __DIR__ . '/../models/User.php';
     }
 }
 ?>
