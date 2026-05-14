@@ -120,11 +120,11 @@
         </div>
     </div>
 
-    <div class="card" id="users">
-        <div class="card-header">
+    <div class="container" id="users">
+        <div>
             <div>
-                <h3 class="card-title">Users</h3>
-                <p class="card-subtitle">CRUD pre používateľov, ktorí vytvárajú blog posty</p>
+                <h3>Users</h3>
+                <p>CRUD for users</p>
             </div>
             <a href="user-create.php" class="btn btn-ghost">+ New User</a>
         </div>
@@ -134,7 +134,7 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Meno</th>
+                        <th>username</th>
                         <th>Email</th>
                         <th>Rola</th>
                         <th>Počet postov</th>
@@ -145,15 +145,9 @@
                     <?php foreach ($users as $u): ?>
                         <tr>
                             <td>#<?php echo htmlspecialchars($u->id); ?></td>
-                            <td><?php echo htmlspecialchars($u->name); ?></td>
+                            <td><?php echo htmlspecialchars($u->username); ?></td>
                             <td><?php echo htmlspecialchars($u->email); ?></td>
-                            <td>
-                                <?php if ($u->role === 'admin'): ?>
-                                    <span class="badge badge-green">Admin</span>
-                                <?php else: ?>
-                                    <span class="badge badge-red">Author</span>
-                                <?php endif; ?>
-                            </td>
+                            <td><?php echo htmlspecialchars($u->role); ?></td>
                             <td><?php echo htmlspecialchars($u->posts_count ?? 0); ?></td>
                             <td>
                                 <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">

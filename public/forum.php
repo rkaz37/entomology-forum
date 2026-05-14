@@ -5,6 +5,9 @@
     $allPosts = $postModel->all();
 ?>
 
+<?php if (Auth::check()): ?>
+                <a href="create-post.php">+POST</a>
+<?php endif; ?>
 <section>
     <div>
         <div>

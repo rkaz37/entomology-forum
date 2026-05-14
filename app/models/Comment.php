@@ -1,5 +1,5 @@
 <?php
-class Post
+class Comment
 {
     private PDO $db;
 
@@ -23,13 +23,13 @@ class Post
         }
     }
 
-    public function all(): array
+    public function all(int $id): array
     {
         try {
-            $stmt = $this->db->query("SELECT posts.*, users.username as username 
-            FROM posts 
-            JOIN users ON posts.user_id = users.id 
-            ORDER BY posts.created_at DESC");
+            $stmt = $this->db->query("SELECT comments.*, users.username as username 
+            FROM comments 
+            JOIN users ON comments.user_id = users.id
+            WHERE comments.post_id = " . $id);
             return $stmt->fetchAll();
         } catch (PDOException $e) {
             
@@ -49,33 +49,27 @@ class Post
         }
     }
     //transakcie: bud sa vykona vsetko alebo nic
-    public function create(string $title, string $content, int $user_id, ?string $published_at): bool 
+    public function create(string $content, int $user_id, int $id): bool 
     {
         try {
             $this->db->beginTransaction();
 
-            $sql = "INSERT INTO posts (title, content, user_id, published_at) 
-                    VALUES (:title, :content, :user_id, :published_at)";
+            $sql = "INSERT INTO comments (post_id, content, user_id) 
+                    VALUES (:id, :content, :user_id)";
             
             $stmt = $this->db->prepare($sql);
             $stmt->execute([
-                'title' => $title, 'content' => $content, 
-                'user_id' => $user_id, 'published_at' => $published_at
+                'id' => $id, 'content' => $content, 'user_id' => $user_id
             ]);
 
             $postId = $this->db->lastInsertId();
-            //$stmtCat = $this->db->prepare("INSERT INTO post_category (post_id, category_id) VALUES (:post_id, :category_id)");
             
-            //foreach ($categoryIds as $categoryId) {
-                //$stmtCat->execute(['post_id' => $postId, 'category_id' => $categoryId]);
-            //}
 
             $this->db->commit();
             return true;
         } catch (PDOException $e) {
             if ($this->db->inTransaction()) $this->db->rollBack();
             //Helper::log("Post::create ERROR: " . $e->getMessage(), 'ERROR');
-            echo "aaaa";
             return false;
         }
     }
