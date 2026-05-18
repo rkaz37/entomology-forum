@@ -4,7 +4,7 @@ class Auth
     public static function login(string $username, string $password): bool
     {
         try {
-            $db = (new Database())->getConnection();
+            $db = (new Database())->connect();
 
             $stmt = $db->prepare("SELECT * FROM users WHERE username = :username LIMIT 1");
             $stmt->execute(['username' => $username]);

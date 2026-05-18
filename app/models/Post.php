@@ -1,13 +1,7 @@
 <?php
-class Post
+require_once 'Model.php';
+class Post extends Model
 {
-    private PDO $db;
-
-    public function __construct()
-    {
-        $database = new Database();
-        $this->db = $database->getConnection();
-    }
 
     public function show(int $id)
     {
@@ -16,6 +10,7 @@ class Post
 
             $post = $stmt->fetch();
             echo $post->title;
+            echo '<br>';
             echo $post->content;
 
         } catch (PDOException $e) {
@@ -49,26 +44,21 @@ class Post
         }
     }
     //transakcie: bud sa vykona vsetko alebo nic
-    public function create(string $title, string $content, int $user_id, ?string $published_at): bool 
+    public function create(string $title, string $content, int $user_id): bool 
     {
         try {
             $this->db->beginTransaction();
 
-            $sql = "INSERT INTO posts (title, content, user_id, published_at) 
-                    VALUES (:title, :content, :user_id, :published_at)";
+            $sql = "INSERT INTO posts (title, content, user_id) 
+                    VALUES (:title, :content, :user_id)";
             
             $stmt = $this->db->prepare($sql);
             $stmt->execute([
                 'title' => $title, 'content' => $content, 
-                'user_id' => $user_id, 'published_at' => $published_at
+                'user_id' => $user_id
             ]);
 
             $postId = $this->db->lastInsertId();
-            //$stmtCat = $this->db->prepare("INSERT INTO post_category (post_id, category_id) VALUES (:post_id, :category_id)");
-            
-            //foreach ($categoryIds as $categoryId) {
-                //$stmtCat->execute(['post_id' => $postId, 'category_id' => $categoryId]);
-            //}
 
             $this->db->commit();
             return true;

@@ -1,13 +1,7 @@
 <?php
-class Comment
+require_once 'Model.php';
+class Comment extends Model
 {
-    private PDO $db;
-
-    public function __construct()
-    {
-        $database = new Database();
-        $this->db = $database->getConnection();
-    }
 
     public function show(int $id)
     {
@@ -107,22 +101,11 @@ class Comment
     public function delete(int $id): bool
     {
         try {
-            return $this->db->prepare("DELETE FROM posts WHERE id = :id")->execute(['id' => $id]);
+            return $this->db->prepare("DELETE FROM comments WHERE id = :id")->execute(['id' => $id]);
         } catch (PDOException $e) {
-            //Helper::log("Post::delete ERROR: " . $e->getMessage(), 'ERROR');
             return false;
         }
     }
 
-    public function getCategoryIdsByPost(int $postId): array
-    {
-        try {
-            $stmt = $this->db->prepare("SELECT category_id FROM post_category WHERE post_id = :post_id");
-            $stmt->execute(['post_id' => $postId]);
-            return $stmt->fetchAll(PDO::FETCH_COLUMN);
-        } catch (PDOException $e) {
-            //Helper::log("Post::getCategoryIdsByPost ERROR: " . $e->getMessage(), 'ERROR');
-            return [];
-        }
-    }
+    
 }

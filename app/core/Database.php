@@ -14,7 +14,7 @@ class Database
         $this->connect();
     }
 
-    private function connect(): void
+    public function connect(): PDO
     {
         $dsn = "mysql:host={$this->host};dbname={$this->dbname};charset=utf8mb4";
 
@@ -22,10 +22,7 @@ class Database
 
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
-    }
 
-    public function getConnection(): PDO
-    {
         return $this->connection;
     }
 }

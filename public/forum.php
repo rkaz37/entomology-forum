@@ -3,11 +3,24 @@
 
     $postModel = new Post();
     $allPosts = $postModel->all();
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete') {
+    $pid = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+
+    if ($pid > 0) {
+        $postModel->delete($pid);
+    }
+
+    header('Location: forum.php');
+    exit;
+}
 ?>
 
 <?php if (Auth::check()): ?>
                 <a href="create-post.php">+POST</a>
 <?php endif; ?>
+
+
 <section>
     <div>
         <div>
@@ -57,6 +70,16 @@
                             </div>
                         </div>
                     </div>
+                    <?php if ($isAdmin): ?>
+                                <form method="POST"  onsubmit="return confirm('Naozaj vymazať?')">
+                                    <input type="hidden" name="action" value="delete">
+                                    <input type="hidden" name="type" value="post">
+                                    <input type="hidden" name="id" value="<?php echo $p->id; ?>">
+                                    <button type="submit" style="color:red; cursor:pointer;">
+                                            Delete
+                                    </button>
+                                </form>
+                    <?php endif; ?>
 
                 <?php endforeach; ?>
             <?php else: ?>

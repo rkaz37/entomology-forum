@@ -9,15 +9,12 @@
     $user_id = isset($_POST['user_id']) ? (int)$_POST['user_id'] : 1;
     $published_at = $_POST['published_at'] ?? null;
 
-    if ($published_at === '') {
-        $published_at = null;
-    }
+
 
         $post->create(
             $title,
             $content,
-            $user_id,
-            $published_at
+            $user_id
         );
 
         header('Location: forum.php');

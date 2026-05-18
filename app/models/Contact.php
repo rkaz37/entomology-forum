@@ -1,13 +1,7 @@
 <?php
-class Contact
+require_once 'Model.php';
+class Contact extends Model
 {
-    private PDO $db;
-
-    public function __construct()
-    {
-        $database = new Database();
-        $this->db = $database->getConnection();
-    }
 
     public function store(array $data): bool
     {

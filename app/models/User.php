@@ -1,14 +1,7 @@
 <?php
-
-class User
+require_once 'Model.php';
+class User extends Model
 {
-    private PDO $db;
-
-    public function __construct()
-    {
-        $database = new Database();
-        $this->db = $database->getConnection();
-    }
 
     // READ - všetci používatelia + ich posty
     public function all(): array
@@ -46,31 +39,27 @@ class User
     }
 
     // CREATE
-    public function create(
-        string $name,
-        string $email,
-        string $password,
-        string $role,
-        ?string $bio = null
-    ): bool
+    public function create(string $username, string $email, string $password): bool
     {
         try {
-            $sql = "
-                INSERT INTO users (name, email, password, role, bio)
-                VALUES (:name, :email, :password, :role, :bio)
-            ";
+            $this->db->beginTransaction();
+            $sql = "INSERT INTO users (username, email, password, role, bio) VALUES (:username, :email, :password, :role, :bio)";
 
             $stmt = $this->db->prepare($sql);
 
-            return $stmt->execute([
-                'name' => $name,
+            $stmt->execute([
+                'username' => $username,
                 'email' => $email,
                 'password' => password_hash($password, PASSWORD_DEFAULT),
-                'role' => $role,
-                'bio' => $bio
-            ]);
+                'role' => 'user',
+                'bio' => '']);
+
+            
+            $this->db->commit();
+            return true;
         } catch (Exception $e) {
-            Helper::log('User::create - ' . $e->getMessage());
+            if ($this->db->inTransaction()) $this->db->rollBack();
+            echo 'aaaaa';
             return false;
         }
     }

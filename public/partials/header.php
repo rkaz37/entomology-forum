@@ -32,5 +32,6 @@
                 <a class="button" id="log" href="logout.php">logout</a>
         <?php else: ?>
                 <a class="button" id="log" href="login.php">login</a>
+                <a class="button" id="log" href="sign-up.php">sign up</a>
         <?php endif; ?>
     </div>
