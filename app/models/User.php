@@ -22,6 +22,23 @@ class User extends Model
         }
     }
 
+    public function show(int $id)
+    {
+        try {
+            $stmt = $this->db->query("SELECT * FROM users WHERE id = " . $id);
+
+            $user = $stmt->fetch();
+        
+            echo '<img src="' . $user->image . '">';
+            echo $user->username;
+            echo '<br>';
+            echo $user->bio;
+
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
     // READ - jeden používateľ
     public function find(int $id): object|false
     {

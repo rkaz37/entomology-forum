@@ -41,7 +41,7 @@
 
         <div>
                     <?php foreach ($comments as $c): ?>
-                            <?php echo htmlspecialchars($c->username); ?>
+                            <?php echo '<a href="profile.php?id=' . $c->user_id . '">' . htmlspecialchars($c->username) . '</a>'; ?>
                             <?php echo htmlspecialchars($c->content); ?>
                             <?php if ($isAdmin): ?>
                                 <form method="POST"  onsubmit="return confirm('Naozaj vymazať?')">

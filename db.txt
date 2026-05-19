@@ -8,6 +8,7 @@ CREATE TABLE users (
     email VARCHAR(150) NOT NULL UNIQUE,
     password VARCHAR(100) NOT NULL,
     role ENUM('admin', 'user') NOT NULL DEFAULT 'user',
+    image VARCHAR(100) NOT NULL,
     bio TEXT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -51,9 +52,9 @@ CREATE TABLE contacts (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO users (username, email, password, role, bio) VALUES
-('admin', 'admin@admin.com', '$2y$10$FiXwJ.Y9GjRi0vZL6h331Ot56uIq9Apkr7zioO//gkv1uYDRamDBi', 'admin', 'admin ucet hehe'),
-('magor', 'magor37@magor.com', '$2y$10$FiXwJ.Y9GjRi0vZL6h331Ot56uIq9Apkr7zioO//gkv1uYDRamDBi', 'user', 'trol');
+INSERT INTO users (username, email, password, role, image, bio) VALUES
+('admin', 'admin@admin.com', '$2y$10$FiXwJ.Y9GjRi0vZL6h331Ot56uIq9Apkr7zioO//gkv1uYDRamDBi', 'admin', '../vault/sb.png', 'admin ucet hehe'),
+('magor', 'magor37@magor.com', '$2y$10$FiXwJ.Y9GjRi0vZL6h331Ot56uIq9Apkr7zioO//gkv1uYDRamDBi', 'user', '../vault/sb.png', 'trol');
 
 
 INSERT INTO posts (title, content, user_id, published_at) VALUES
@@ -66,5 +67,5 @@ INSERT INTO contacts (username, email, message) VALUES
 
 INSERT INTO comments (post_id, content, user_id,  published_at) VALUES
 (1,'hehehehe', 1, '2026-03-20 10:00:00'),
-(1,'a to velmi', 2, '2026-03-20 10:00:00')
+(1,'a to velmi', 2, '2026-03-20 10:00:00'),
 (2,'a to velmi', 2, '2026-03-20 10:00:00');

@@ -4,6 +4,9 @@
 
     //Auth::requireLogin();
     $isAdmin = Auth::isAdmin();
+    if(Auth::check()){
+        $user = $_SESSION['user_id'];
+    }
 
 ?>
 
@@ -26,7 +29,7 @@
                 <a href="admin.php">MOD MENU</a>
         <?php endif; ?>
         <?php if (Auth::check()): ?>
-                <a href="profile.php"><?php echo $_SESSION['username']; ?></a>
+                <a href="profile.php?id=<?php echo $user; ?>"><?php echo $_SESSION['username']; ?></a>
         <?php endif; ?>
         <?php if (Auth::check()): ?>
                 <a class="button" id="log" href="logout.php">logout</a>
