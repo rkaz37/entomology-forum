@@ -53,7 +53,7 @@ CREATE TABLE contacts (
 );
 
 INSERT INTO users (username, email, password, role, image, bio) VALUES
-('admin', 'admin@admin.com', '$2y$10$FiXwJ.Y9GjRi0vZL6h331Ot56uIq9Apkr7zioO//gkv1uYDRamDBi', 'admin', '../vault/sb.png', 'admin ucet hehe'),
+('admin', 'admin@admin.com', '$2y$10$FiXwJ.Y9GjRi0vZL6h331Ot56uIq9Apkr7zioO//gkv1uYDRamDBi', 'admin', '../vault/buni.png', 'admin ucet hehe'),
 ('magor', 'magor37@magor.com', '$2y$10$FiXwJ.Y9GjRi0vZL6h331Ot56uIq9Apkr7zioO//gkv1uYDRamDBi', 'user', '../vault/sb.png', 'trol');
 
 
@@ -65,7 +65,7 @@ INSERT INTO posts (title, content, user_id, published_at) VALUES
 INSERT INTO contacts (username, email, message) VALUES
 ('magor', 'magor37@magor.com', 'hehe');
 
-INSERT INTO comments (post_id, content, user_id,  published_at) VALUES
-(1,'hehehehe', 1, '2026-03-20 10:00:00'),
-(1,'a to velmi', 2, '2026-03-20 10:00:00'),
-(2,'a to velmi', 2, '2026-03-20 10:00:00');
+INSERT INTO comments (post_id, reply_id, content, user_id,  published_at) VALUES
+(1, NULL,'hehehehe', 1, '2026-03-20 10:00:00'),
+(1, 1,'a to velmi', 2, '2026-03-20 10:00:00'),
+(2, NULL,'a to velmi', 2, '2026-03-20 10:00:00');

@@ -6,7 +6,10 @@ class Comment extends Model
     public function show(int $id)
     {
         try {
-            $stmt = $this->db->query("SELECT title, content FROM posts WHERE id = " . $id);
+            $stmt = $this->db->query("SELECT comments.*, users.username as username 
+            FROM comments 
+            JOIN users ON comments.user_id = users.id
+            WHERE comments.post_id = " . $id);
 
             $post = $stmt->fetch();
             echo $post->title;
@@ -30,6 +33,7 @@ class Comment extends Model
             return [];
         }
     }
+
 
     public function find(int $id): object|false
     {

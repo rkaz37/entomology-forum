@@ -7,17 +7,10 @@ class User extends Model
     public function all(): array
     {
         try {
-            $sql = "
-                SELECT u.*, COUNT(p.id) as posts_count
-                FROM users u
-                LEFT JOIN posts p ON p.user_id = u.id
-                GROUP BY u.id
-                ORDER BY u.id DESC
-            ";
+            $sql = "SELECT u.*, COUNT(p.id) as posts_count FROM users u LEFT JOIN posts p ON p.user_id = u.id GROUP BY u.id ORDER BY u.id DESC";
 
             return $this->db->query($sql)->fetchAll();
         } catch (Exception $e) {
-            Helper::log('User::all - ' . $e->getMessage());
             return [];
         }
     }
@@ -50,7 +43,6 @@ class User extends Model
 
             return $stmt->fetch();
         } catch (Exception $e) {
-            Helper::log('User::find - ' . $e->getMessage());
             return false;
         }
     }
@@ -60,7 +52,7 @@ class User extends Model
     {
         try {
             $this->db->beginTransaction();
-            $sql = "INSERT INTO users (username, email, password, role, bio) VALUES (:username, :email, :password, :role, :bio)";
+            $sql = "INSERT INTO users (username, email, password, role, image) VALUES (:username, :email, :password, :role, :image)";
 
             $stmt = $this->db->prepare($sql);
 
@@ -69,72 +61,35 @@ class User extends Model
                 'email' => $email,
                 'password' => password_hash($password, PASSWORD_DEFAULT),
                 'role' => 'user',
-                'bio' => '']);
+                'image' => '../vault/default.png']);
 
             
             $this->db->commit();
             return true;
         } catch (Exception $e) {
             if ($this->db->inTransaction()) $this->db->rollBack();
-            echo 'aaaaa';
             return false;
         }
     }
 
     // UPDATE
-    public function update(
-        int $id,
-        string $name,
-        string $email,
-        string $password,
-        string $role,
-        ?string $bio = null
-    ): bool
+    public function update(int $id, string $username, string $email, string $bio): bool
     {
         try {
-            if (!empty($password)) {
-                $sql = "
-                    UPDATE users
-                    SET name = :name,
-                        email = :email,
-                        password = :password,
-                        role = :role,
-                        bio = :bio
-                    WHERE id = :id
-                ";
+                $sql = "UPDATE users SET username = :username, email = :email, bio = :bio WHERE id = :id";
 
                 $params = [
                     'id' => $id,
-                    'name' => $name,
+                    'username' => $username,
                     'email' => $email,
-                    'password' => password_hash($password, PASSWORD_DEFAULT),
-                    'role' => $role,
                     'bio' => $bio
                 ];
-            } else {
-                $sql = "
-                    UPDATE users
-                    SET name = :name,
-                        email = :email,
-                        role = :role,
-                        bio = :bio
-                    WHERE id = :id
-                ";
-
-                $params = [
-                    'id' => $id,
-                    'name' => $name,
-                    'email' => $email,
-                    'role' => $role,
-                    'bio' => $bio
-                ];
-            }
+            
 
             $stmt = $this->db->prepare($sql);
             return $stmt->execute($params);
 
         } catch (Exception $e) {
-            Helper::log('User::update - ' . $e->getMessage());
             return false;
         }
     }

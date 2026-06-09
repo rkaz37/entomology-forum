@@ -18,8 +18,10 @@ class Auth
             session_regenerate_id(true);
 
             $_SESSION['user_id'] = $user->id;
-            $_SESSION['user_role'] = $user->role;
+            $_SESSION['role'] = $user->role;
             $_SESSION['username'] = $user->username;
+            $_SESSION['email'] = $user->email;
+            $_SESSION['bio'] = $user->bio;
 
             return true;
 
@@ -54,6 +56,6 @@ class Auth
 
     public static function isAdmin(): bool
     {
-        return ($_SESSION['user_role'] ?? null) === 'admin';
+        return ($_SESSION['role'] ?? null) === 'admin';
     }
 }

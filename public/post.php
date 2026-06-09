@@ -5,6 +5,7 @@
 
     $id = $_GET['id'];
     $comments = $comment->all($id);
+    //echo count($comments);
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'comment') {
     $content = $_POST['content'] ?? '';
     $user_id = isset($_POST['user_id']) ? (int)$_POST['user_id'] : 1;
@@ -41,8 +42,11 @@
 
         <div>
                     <?php foreach ($comments as $c): ?>
+                            <?php echo htmlspecialchars($c->id); ?>
                             <?php echo '<a href="profile.php?id=' . $c->user_id . '">' . htmlspecialchars($c->username) . '</a>'; ?>
                             <?php echo htmlspecialchars($c->content); ?>
+                            <?php echo htmlspecialchars($c->reply_id); ?>
+                            <?php if($c->reply_id === NULL) echo 'y'; ?>
                             <?php if ($isAdmin): ?>
                                 <form method="POST"  onsubmit="return confirm('Naozaj vymazať?')">
                                     <input type="hidden" name="action" value="delete">
