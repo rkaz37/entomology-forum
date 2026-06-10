@@ -5,6 +5,7 @@
 
     $id = $_GET['id'];
     $comments = $comment->all($id);
+
     //echo count($comments);
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'comment') {
     $content = $_POST['content'] ?? '';
@@ -34,9 +35,15 @@
 ?>
 
 <?php
-    $post->show($id);
+    $post = $post->find($id);
     
 ?>
+<div class="container" id="post">
+    <?php 
+        echo $post->title;
+        echo "<br>";
+        echo $post->content;
+    ?>
 
 <div class="container" id="comments">
 

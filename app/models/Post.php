@@ -3,31 +3,26 @@ require_once 'Model.php';
 class Post extends Model
 {
 
-    public function show(int $id)
+    public function showProfile(int $id): array
     {
         try {
-            $stmt = $this->db->query("SELECT title, content FROM posts WHERE id = " . $id);
+            $stmt = $this->db->prepare("SELECT posts.*, users.username as username FROM posts JOIN users ON posts.user_id = users.id WHERE users.id = :id 
+            ORDER BY posts.created_at DESC");
+            $stmt->execute(['id' => $id]);
 
-            $post = $stmt->fetch();
-            echo $post->title;
-            echo '<br>';
-            echo $post->content;
-
-        } catch (PDOException $e) {
-            return false;
+            return $stmt->fetchAll();
+        } catch(PDOException $e) {
+            return [];
         }
     }
 
     public function all(): array
     {
         try {
-            $stmt = $this->db->query("SELECT posts.*, users.username as username 
-            FROM posts 
-            JOIN users ON posts.user_id = users.id 
-            ORDER BY posts.created_at DESC");
+            $stmt = $this->db->query("SELECT posts.*, users.username as username FROM posts JOIN users ON posts.user_id = users.id ORDER BY posts.created_at DESC");
+
             return $stmt->fetchAll();
-        } catch (PDOException $e) {
-            
+        } catch(PDOException $e) {            
             return [];
         }
     }
@@ -37,9 +32,9 @@ class Post extends Model
         try {
             $stmt = $this->db->prepare("SELECT * FROM posts WHERE id = :id");
             $stmt->execute(['id' => $id]);
+
             return $stmt->fetch();
-        } catch (PDOException $e) {
-            //Helper::log("Post::find ERROR: " . $e->getMessage(), 'ERROR');
+        } catch(PDOException $e){
             return false;
         }
     }
@@ -49,14 +44,10 @@ class Post extends Model
         try {
             $this->db->beginTransaction();
 
-            $sql = "INSERT INTO posts (title, content, user_id) 
-                    VALUES (:title, :content, :user_id)";
+            $sql = "INSERT INTO posts (title, content, user_id) VALUES (:title, :content, :user_id)";
             
             $stmt = $this->db->prepare($sql);
-            $stmt->execute([
-                'title' => $title, 'content' => $content, 
-                'user_id' => $user_id
-            ]);
+            $stmt->execute(['title' => $title, 'content' => $content, 'user_id' => $user_id]);
 
             $postId = $this->db->lastInsertId();
 
@@ -70,36 +61,6 @@ class Post extends Model
         }
     }
 
-    public function update(int $id, string $title, string $slug, string $excerpt, string $content, string $image, string $status, int $user_id, ?string $published_at, array $categoryIds): bool 
-    {
-        try {
-            $this->db->beginTransaction();
-
-            $sql = "UPDATE posts SET title = :title, slug = :slug, excerpt = :excerpt, content = :content, 
-                    image = :image, status = :status, user_id = :user_id, published_at = :published_at WHERE id = :id";
-            
-            $stmt = $this->db->prepare($sql);
-            $stmt->execute([
-                'id' => $id, 'title' => $title, 'slug' => $slug, 'excerpt' => $excerpt, 'content' => $content, 
-                'image' => $image, 'status' => $status, 'user_id' => $user_id, 'published_at' => $published_at
-            ]);
-
-            $this->db->prepare("DELETE FROM post_category WHERE post_id = :id")->execute(['id' => $id]);
-            
-            $stmtCat = $this->db->prepare("INSERT INTO post_category (post_id, category_id) VALUES (:post_id, :category_id)");
-            foreach ($categoryIds as $categoryId) {
-                $stmtCat->execute(['post_id' => $id, 'category_id' => $categoryId]);
-            }
-
-            $this->db->commit();
-            return true;
-        } catch (PDOException $e) {
-            if ($this->db->inTransaction()) $this->db->rollBack();
-            //Helper::log("Post::update ERROR: " . $e->getMessage(), 'ERROR');
-            return false;
-        }
-    }
-
     public function delete(int $id): bool
     {
         try {
@@ -107,18 +68,6 @@ class Post extends Model
         } catch (PDOException $e) {
             //Helper::log("Post::delete ERROR: " . $e->getMessage(), 'ERROR');
             return false;
-        }
-    }
-
-    public function getCategoryIdsByPost(int $postId): array
-    {
-        try {
-            $stmt = $this->db->prepare("SELECT category_id FROM post_category WHERE post_id = :post_id");
-            $stmt->execute(['post_id' => $postId]);
-            return $stmt->fetchAll(PDO::FETCH_COLUMN);
-        } catch (PDOException $e) {
-            //Helper::log("Post::getCategoryIdsByPost ERROR: " . $e->getMessage(), 'ERROR');
-            return [];
         }
     }
 }

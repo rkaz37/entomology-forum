@@ -10,29 +10,11 @@ class User extends Model
             $sql = "SELECT u.*, COUNT(p.id) as posts_count FROM users u LEFT JOIN posts p ON p.user_id = u.id GROUP BY u.id ORDER BY u.id DESC";
 
             return $this->db->query($sql)->fetchAll();
-        } catch (Exception $e) {
+        } catch(Exception $e){
             return [];
         }
     }
 
-    public function show(int $id)
-    {
-        try {
-            $stmt = $this->db->query("SELECT * FROM users WHERE id = " . $id);
-
-            $user = $stmt->fetch();
-        
-            echo '<img src="' . $user->image . '">';
-            echo $user->username;
-            echo '<br>';
-            echo $user->bio;
-
-        } catch (PDOException $e) {
-            return false;
-        }
-    }
-
-    // READ - jeden používateľ
     public function find(int $id): object|false
     {
         try {
@@ -42,12 +24,11 @@ class User extends Model
             $stmt->execute(['id' => $id]);
 
             return $stmt->fetch();
-        } catch (Exception $e) {
+        } catch(Exception $e){
             return false;
         }
     }
 
-    // CREATE
     public function create(string $username, string $email, string $password): bool
     {
         try {
@@ -66,35 +47,28 @@ class User extends Model
             
             $this->db->commit();
             return true;
-        } catch (Exception $e) {
+
+        } catch(Exception $e){
             if ($this->db->inTransaction()) $this->db->rollBack();
             return false;
         }
     }
 
-    // UPDATE
     public function update(int $id, string $username, string $email, string $bio): bool
     {
         try {
-                $sql = "UPDATE users SET username = :username, email = :email, bio = :bio WHERE id = :id";
+            $sql = "UPDATE users SET username = :username, email = :email, bio = :bio WHERE id = :id";
 
-                $params = [
-                    'id' => $id,
-                    'username' => $username,
-                    'email' => $email,
-                    'bio' => $bio
-                ];
-            
+            $params = ['id' => $id, 'username' => $username, 'email' => $email, 'bio' => $bio];
 
             $stmt = $this->db->prepare($sql);
             return $stmt->execute($params);
 
-        } catch (Exception $e) {
+        } catch(Exception $e){
             return false;
         }
     }
 
-    // DELETE
     public function delete(int $id): bool
     {
         try {
@@ -103,8 +77,7 @@ class User extends Model
             $stmt = $this->db->prepare($sql);
             return $stmt->execute(['id' => $id]);
 
-        } catch (Exception $e) {
-            Helper::log('User::delete - ' . $e->getMessage());
+        } catch(Exception $e){
             return false;
         }
     }

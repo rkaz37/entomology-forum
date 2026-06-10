@@ -3,9 +3,12 @@
 
     $user = new User();
 
-    if (!Auth::check() || $_SESSION['id'] != $_GET['id']) {
-    Redirect::redirect('home.php');
+    if ($_SESSION['id'] != $_GET['id']) {
+        if(!$isAdmin){
+            Redirect::redirect('home.php');
+        }
     }
+
 
     $user_data = $user->find($_GET['id']);
     
@@ -52,7 +55,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             class="form-input"
                             placeholder="bio"
                             value="<?= htmlspecialchars($user_data->bio) ?>"
-                        >  
+                        > 
+
+                <label class="form-label" for="image">Obrázok</label>
+                <input
+                    id="image"
+                    type="file"
+                    name="image"
+                    value=".jpg,.jpeg,.png,.webp"
+                    style="width:100%; padding:0.85rem 1rem;"
+                >
+
 
 
                     

@@ -11,11 +11,7 @@
 
 
 
-        $post->create(
-            $title,
-            $content,
-            $user_id
-        );
+        $post->create($title,$content,$user_id);
 
         header('Location: forum.php');
         exit;

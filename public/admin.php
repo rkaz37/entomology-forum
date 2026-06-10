@@ -4,6 +4,7 @@
     $post = new Post();
     $user = new User();
 
+
     $posts = $post->all();
     $users = $user->all();
 
@@ -30,14 +31,7 @@
     header('Location: admin.php');
     exit;
 }
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'logout')
-        {
-            $validate = new Validate();
-
-            $validate->logout();
-        }
-
-    include_once 'partials/header-admin.php';
+    
     
 ?>
 
@@ -151,7 +145,7 @@
                             <td><?php echo htmlspecialchars($u->posts_count ?? 0); ?></td>
                             <td>
                                 <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-                                    <a href="user-edit.php?id=<?php echo $u->id; ?>" class="btn btn-ghost">
+                                    <a href="edit-profile.php?id=<?php echo $u->id; ?>" class="btn btn-ghost">
                                         Edit
                                     </a>
 

@@ -34,7 +34,6 @@ class Comment extends Model
         }
     }
 
-
     public function find(int $id): object|false
     {
         try {
@@ -46,6 +45,7 @@ class Comment extends Model
             return false;
         }
     }
+
     //transakcie: bud sa vykona vsetko alebo nic
     public function create(string $content, int $user_id, int $id): bool 
     {
@@ -68,36 +68,6 @@ class Comment extends Model
         } catch (PDOException $e) {
             if ($this->db->inTransaction()) $this->db->rollBack();
             //Helper::log("Post::create ERROR: " . $e->getMessage(), 'ERROR');
-            return false;
-        }
-    }
-
-    public function update(int $id, string $title, string $slug, string $excerpt, string $content, string $image, string $status, int $user_id, ?string $published_at, array $categoryIds): bool 
-    {
-        try {
-            $this->db->beginTransaction();
-
-            $sql = "UPDATE posts SET title = :title, slug = :slug, excerpt = :excerpt, content = :content, 
-                    image = :image, status = :status, user_id = :user_id, published_at = :published_at WHERE id = :id";
-            
-            $stmt = $this->db->prepare($sql);
-            $stmt->execute([
-                'id' => $id, 'title' => $title, 'slug' => $slug, 'excerpt' => $excerpt, 'content' => $content, 
-                'image' => $image, 'status' => $status, 'user_id' => $user_id, 'published_at' => $published_at
-            ]);
-
-            $this->db->prepare("DELETE FROM post_category WHERE post_id = :id")->execute(['id' => $id]);
-            
-            $stmtCat = $this->db->prepare("INSERT INTO post_category (post_id, category_id) VALUES (:post_id, :category_id)");
-            foreach ($categoryIds as $categoryId) {
-                $stmtCat->execute(['post_id' => $id, 'category_id' => $categoryId]);
-            }
-
-            $this->db->commit();
-            return true;
-        } catch (PDOException $e) {
-            if ($this->db->inTransaction()) $this->db->rollBack();
-            //Helper::log("Post::update ERROR: " . $e->getMessage(), 'ERROR');
             return false;
         }
     }

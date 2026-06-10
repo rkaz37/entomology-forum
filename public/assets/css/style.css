@@ -6,6 +6,27 @@
     margin-bottom: 20px;
 }
 
+.profile-all{
+    display: flex;
+    align-items:center;
+    justify-content:start;
+    font-weight: bold;
+}
+
+.profile img{
+    border-radius: 25px;
+    border-width: 3px;
+    border-style: solid;
+    width: 250px;
+    height: 250px;
+}
+
+.username{
+    margin-top: 0px;
+    margin-left: 10px;
+}
+
+
 .navbar a{
     margin-left: 10px;
     margin-right: 10px;

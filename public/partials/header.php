@@ -5,7 +5,7 @@
     //Auth::requireLogin();
     $isAdmin = Auth::isAdmin();
     if(Auth::check()){
-        $user = $_SESSION['user_id'];
+        $user = $_SESSION['id'];
     }
 
 ?>

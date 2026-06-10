@@ -16,8 +16,8 @@ class Auth
             }
 
             session_regenerate_id(true);
-
-            $_SESSION['user_id'] = $user->id;
+            
+            $_SESSION['id'] = $user->id;
             $_SESSION['role'] = $user->role;
             $_SESSION['username'] = $user->username;
             $_SESSION['email'] = $user->email;
@@ -39,7 +39,7 @@ class Auth
 
     public static function check(): bool
     {
-        return isset($_SESSION['user_id']);
+        return isset($_SESSION['id']);
     }
 
     public static function requireLogin(): void
@@ -47,11 +47,6 @@ class Auth
         if (!self::check()) {
             Redirect::redirect('login.php');
         }
-    }
-
-    public static function id(): int
-    {
-        return $_SESSION['user_id'] ?? null;
     }
 
     public static function isAdmin(): bool
