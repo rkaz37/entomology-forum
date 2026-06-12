@@ -17,15 +17,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $bio = trim($_POST['bio'] ?? '');
+    $image = $_POST['image'] ?? $user_data->image;
 
-    $user->update($_GET['id'], $username, $email, $bio);
-    Redirect::redirect('profile.php?id=' . $_GET['id']);
+    if(!$user->usernameValidation($username)){
+        if (isset($_FILES['image']) && $_FILES['image']['error'] === 0){
+            $originalName = $_FILES['image']['name'];
+            $tmpName = $_FILES['image']['tmp_name'];
+            $extension = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp'];
+
+            if (in_array($extension, $allowedExtensions)) {
+                $image = '../vault/' . time() . '-' . basename($originalName);
+
+                move_uploaded_file($tmpName, $image);
+            }
+        }
+        $user->update($_GET['id'], $username, $email, $bio, $image);
+        Redirect::redirect('profile.php?id=' . $_GET['id']);
+    }
+    else{
+        echo "username already taken";
+    }
 
     }
 ?>
 
 
-<form class="login-form" method="POST">
+<form class="login-form" method="POST" enctype="multipart/form-data">
     <div>
         <label class="form-label" for="username">username</label>
                         <input type="text"

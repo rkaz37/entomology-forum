@@ -39,15 +39,15 @@ class Post extends Model
         }
     }
     //transakcie: bud sa vykona vsetko alebo nic
-    public function create(string $title, string $content, int $user_id): bool 
+    public function create(string $title, string $content, int $user_id, $image): bool 
     {
         try {
             $this->db->beginTransaction();
 
-            $sql = "INSERT INTO posts (title, content, user_id) VALUES (:title, :content, :user_id)";
+            $sql = "INSERT INTO posts (title, content, user_id, image) VALUES (:title, :content, :user_id, :image)";
             
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(['title' => $title, 'content' => $content, 'user_id' => $user_id]);
+            $stmt->execute(['title' => $title, 'content' => $content, 'user_id' => $user_id, 'image' => $image]);
 
             $postId = $this->db->lastInsertId();
 

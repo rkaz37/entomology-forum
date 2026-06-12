@@ -54,12 +54,12 @@ class User extends Model
         }
     }
 
-    public function update(int $id, string $username, string $email, string $bio): bool
+    public function update(int $id, string $username, string $email, string $bio, string $image): bool
     {
         try {
-            $sql = "UPDATE users SET username = :username, email = :email, bio = :bio WHERE id = :id";
+            $sql = "UPDATE users SET username = :username, email = :email, bio = :bio, image = :image WHERE id = :id";
 
-            $params = ['id' => $id, 'username' => $username, 'email' => $email, 'bio' => $bio];
+            $params = ['id' => $id, 'username' => $username, 'email' => $email, 'bio' => $bio, 'image' => $image];
 
             $stmt = $this->db->prepare($sql);
             return $stmt->execute($params);
@@ -79,6 +79,20 @@ class User extends Model
 
         } catch(Exception $e){
             return false;
+        }
+    }
+
+    public function usernameValidation(string $username): bool
+    {
+        try {
+            $sql = "SELECT count(*) FROM users WHERE username = :username";
+
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute(['username' => $username]);
+
+            return $stmt->fetchColumn() > 0;
+        } catch(Exception $e){
+            return 0;
         }
     }
 }

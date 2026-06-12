@@ -4,20 +4,12 @@ USE minimalism_forum;
 
 CREATE TABLE users (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(100) NOT NULL,
+    username VARCHAR(100) NOT NULL UNIQUE,
     email VARCHAR(150) NOT NULL UNIQUE,
     password VARCHAR(100) NOT NULL,
     role ENUM('admin', 'user') NOT NULL DEFAULT 'user',
     image VARCHAR(100) NOT NULL,
     bio TEXT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE categories (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    slug VARCHAR(120) NOT NULL UNIQUE,
-    description TEXT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -27,6 +19,7 @@ CREATE TABLE posts (
     content LONGTEXT NOT NULL,
     status ENUM('draft', 'published') NOT NULL DEFAULT 'draft',
     user_id INT UNSIGNED NOT NULL,
+    image VARCHAR(100) NOT NULL, 
     published_at DATETIME NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -57,9 +50,9 @@ INSERT INTO users (username, email, password, role, image, bio) VALUES
 ('magor', 'magor37@magor.com', '$2y$10$FiXwJ.Y9GjRi0vZL6h331Ot56uIq9Apkr7zioO//gkv1uYDRamDBi', 'user', '../vault/sb.png', 'trol');
 
 
-INSERT INTO posts (title, content, user_id, published_at) VALUES
-('troll post', 'blablablablablablablablablablablablablabla', 2, '2026-03-20 10:00:00'),
-('ADMIN POST', 'blablablablablablablablablablablablablablaaaaaaaaaaa',  1, '2026-03-20 10:00:00');
+INSERT INTO posts (title, content, user_id, image, published_at) VALUES
+('troll post', 'blablablablablablablablablablablablablabla', 2, '../vault/sb.png', '2026-03-20 10:00:00'),
+('ADMIN POST', 'blablablablablablablablablablablablablablaaaaaaaaaaa',  1, '../vault/sb.png', '2026-03-20 10:00:00');
 
 
 INSERT INTO contacts (username, email, message) VALUES

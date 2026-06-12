@@ -52,7 +52,7 @@
                             </div>
                         </div>
                     </div>
-                    <?php if ($isAdmin): ?>
+                    <?php if($isAdmin ?? $p->user_id == $_SESSION['id']): ?>
                                 <form method="POST"  onsubmit="return confirm('Naozaj vymazať?')">
                                     <input type="hidden" name="action" value="delete">
                                     <input type="hidden" name="type" value="post">

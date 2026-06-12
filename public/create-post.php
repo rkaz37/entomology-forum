@@ -6,12 +6,24 @@
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = $_POST['title'] ?? '';
     $content = $_POST['content'] ?? '';
-    $user_id = isset($_POST['user_id']) ? (int)$_POST['user_id'] : 1;
+    $user_id = isset($_SESSION['id']);
     $published_at = $_POST['published_at'] ?? null;
+    $image = $_POST['image'] ?? '../vault/default.png';
 
 
+        if (isset($_FILES['image']) && $_FILES['image']['error'] === 0){
+            $originalName = $_FILES['image']['name'];
+            $tmpName = $_FILES['image']['tmp_name'];
+            $extension = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp'];
 
-        $post->create($title,$content,$user_id);
+            if (in_array($extension, $allowedExtensions)) {
+                $image = '../vault/' . time() . '-' . basename($originalName);
+
+                move_uploaded_file($tmpName, $image);
+            }
+        }
+        $post->create($title, $content, $user_id, $image);
 
         header('Location: forum.php');
         exit;
@@ -62,6 +74,14 @@
                     style="width:100%; padding:0.85rem 1rem;"
                 ></textarea>
             </div>
+            <label class="form-label" for="image">Obrázok</label>
+                <input
+                    id="image"
+                    type="file"
+                    name="image"
+                    value=".jpg,.jpeg,.png,.webp"
+                    style="width:100%; padding:0.85rem 1rem;"
+                >
 
 
     <button type="submit" class="btn">Save Post</button>

@@ -12,11 +12,7 @@
     $user_id = isset($_POST['user_id']) ? (int)$_POST['user_id'] : 1;
 
 
-        $comment->create(
-            $content,
-            $user_id,
-            $id
-        );
+        $comment->create($content, $user_id, $id);
 
         header('Location: post.php?id=' . $id);
         exit;
@@ -39,7 +35,9 @@
     
 ?>
 <div class="container" id="post">
+    <img src="<?= $post->image ?>">
     <?php 
+        
         echo $post->title;
         echo "<br>";
         echo $post->content;
