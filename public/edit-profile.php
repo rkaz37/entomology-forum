@@ -19,7 +19,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $bio = trim($_POST['bio'] ?? '');
     $image = $_POST['image'] ?? $user_data->image;
 
-    if(!$user->usernameValidation($username)){
+    $usernameValidation = false;
+    $emailValidation = false;
+
+    if($username == $_SESSION['username']){
+        $usernameValidation = true;
+    } else{
+        $usernameValidation = !$user->usernameValidation($username);
+    }
+    if($email == $_SESSION['email']){
+        $emailValidation = true;
+    } else{
+        $emailValidation = !$user->emailValidation($email);
+    }
+
+    if($usernameValidation && $emailValidation){
         if (isset($_FILES['image']) && $_FILES['image']['error'] === 0){
             $originalName = $_FILES['image']['name'];
             $tmpName = $_FILES['image']['tmp_name'];
@@ -34,12 +48,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $user->update($_GET['id'], $username, $email, $bio, $image);
         Redirect::redirect('profile.php?id=' . $_GET['id']);
+        exit;
     }
     else{
-        echo "username already taken";
+        echo "Username or Email already taken!";
     }
-
-    }
+}
 ?>
 
 

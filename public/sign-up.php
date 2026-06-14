@@ -12,17 +12,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
     $email = trim($_POST['email'] ?? '');
-    $user->create($username, $email, $password);
+    if(!$user->usernameValidation($username) && !$user->emailValidation($email)){
+        if (isset($_FILES['image']) && $_FILES['image']['error'] === 0){
+            $originalName = $_FILES['image']['name'];
+            $tmpName = $_FILES['image']['tmp_name'];
+            $extension = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp'];
 
-    if (Auth::login($username, $password)) {
-        Redirect::redirect('home.php');
+            if (in_array($extension, $allowedExtensions)) {
+                $image = '../vault/' . time() . '-' . basename($originalName);
+
+                move_uploaded_file($tmpName, $image);
+            }
+        }
+    
+        $user->create($username, $email, $password, $image);
+
+        if (Auth::login($username, $password)) {
+            Redirect::redirect('home.php');
+        }
     }
-
     $error = 'Error!';
 }
 ?>
 
-<form class="container form" method="POST">
+<form class="container form" method="POST" enctype="multipart/form-data">
     <h2>Sign up!</h2>
     <div>
         <label for="username">Username:</label>
@@ -37,6 +51,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div>
         <label for="password">Password</label>
         <input type="password" id="password" name="password" placeholder="Enter your password..." value="<?= htmlspecialchars($_POST['password'] ?? '') ?>" required>
+    </div>
+    <div>
+        <label for="image">Obrázok</label>
+        <input id="image" type="file" name="image" value=".jpg,.jpeg,.png,.webp">
     </div>
 
 

@@ -1,6 +1,13 @@
 <?php
     include_once 'partials/header.php';
 
+    if(!Auth::check()){
+        Redirect::redirect('home.php');
+    }
+    if(!Auth::isAdmin()){
+        Redirect::redirect('home.php');
+    }
+
     $post = new Post();
     $user = new User();
 
@@ -29,6 +36,18 @@
 }
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'potd'){
         $post->potd($_POST['id']);
+        Redirect::redirect('admin.php');
+        exit;
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'promote'){
+        $user->promote($_POST['id']);
+        Redirect::redirect('admin.php');
+        exit;
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'demote'){
+        $user->demote($_POST['id']);
         Redirect::redirect('admin.php');
         exit;
     }
@@ -104,13 +123,9 @@
     </div>
 
     <div class="container" id="users">
-        <div>
             <div>
-                <h3>Users</h3>
-                <p>CRUD for users</p>
+                <h3>Users: </h3>
             </div>
-            <a href="user-create.php" class="btn btn-ghost">+ New User</a>
-        </div>
 
         <div class="table-container">
             <table>
@@ -119,9 +134,8 @@
                         <th>ID</th>
                         <th>username</th>
                         <th>Email</th>
-                        <th>Rola</th>
-                        <th>Počet postov</th>
-                        <th>Akcie</th>
+                        <th>Role</th>
+                        <th># of posts</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -134,11 +148,11 @@
                             <td><?php echo htmlspecialchars($u->posts_count ?? 0); ?></td>
                             <td>
                                 <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-                                    <a href="edit-profile.php?id=<?php echo $u->id; ?>" class="btn btn-ghost">
+                                    <a href="edit-profile.php?id=<?php echo $u->id; ?>">
                                         Edit
                                     </a>
 
-                                    <form method="POST" style="display:inline;" onsubmit="return confirm('Naozaj vymazať?')">
+                                    <form method="POST" style="display:inline;" onsubmit="return confirm('Delete?')">
                                         <input type="hidden" name="action" value="delete">
                                         <input type="hidden" name="type" value="user">
                                         <input type="hidden" name="id" value="<?php echo $u->id; ?>">
@@ -146,6 +160,27 @@
                                             Delete
                                         </button>
                                     </form>
+                                <?php if($u->role == 'user'): ?>
+                                    <form method="POST" style="display:inline;" onsubmit="return confirm('Promote to admin?')">
+                                        <input type="hidden" name="action" value="promote">
+                                        <input type="hidden" name="type" value="user">
+                                        <input type="hidden" name="id" value="<?php echo $u->id; ?>">
+                                        <button type="submit" class="btn btn-ghost" style="color:red; cursor:pointer;">
+                                            Promote
+                                        </button>
+                                    </form>
+                                <?php endif; ?>
+                                <?php if($u->role == 'admin'): ?>
+                                    <form method="POST" style="display:inline;" onsubmit="return confirm('Demote to user?')">
+                                        <input type="hidden" name="action" value="demote">
+                                        <input type="hidden" name="type" value="user">
+                                        <input type="hidden" name="id" value="<?php echo $u->id; ?>">
+                                        <button type="submit" class="btn btn-ghost" style="color:red; cursor:pointer;">
+                                            Demote
+                                        </button>
+                                    </form>
+                                <?php endif; ?>
+                                
                                 </div>
                             </td>
                         </tr>

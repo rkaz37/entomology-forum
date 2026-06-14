@@ -29,7 +29,7 @@ class User extends Model
         }
     }
 
-    public function create(string $username, string $email, string $password): bool
+    public function create(string $username, string $email, string $password, string $image): bool
     {
         try {
             $this->db->beginTransaction();
@@ -37,12 +37,7 @@ class User extends Model
 
             $stmt = $this->db->prepare($sql);
 
-            $stmt->execute([
-                'username' => $username,
-                'email' => $email,
-                'password' => password_hash($password, PASSWORD_DEFAULT),
-                'role' => 'user',
-                'image' => '../vault/default.png']);
+            $stmt->execute(['username' => $username, 'email' => $email, 'password' => password_hash($password, PASSWORD_DEFAULT), 'role' => 'user', 'image' => $image]);
 
             
             $this->db->commit();
@@ -61,7 +56,14 @@ class User extends Model
 
             $params = ['id' => $id, 'username' => $username, 'email' => $email, 'bio' => $bio, 'image' => $image];
 
+
+
             $stmt = $this->db->prepare($sql);
+
+            $_SESSION['username'] = $username;
+            $_SESSION['email'] = $email;
+            $_SESSION['bio'] = $bio;
+
             return $stmt->execute($params);
 
         } catch(Exception $e){
@@ -93,6 +95,51 @@ class User extends Model
             return $stmt->fetchColumn() > 0;
         } catch(Exception $e){
             return 0;
+        }
+    }
+
+    public function emailValidation(string $email): bool
+    {
+        try {
+            $sql = "SELECT count(*) FROM users WHERE email = :email";
+
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute(['email' => $email]);
+
+            return $stmt->fetchColumn() > 0;
+        } catch(Exception $e){
+            return 0;
+        }
+    }
+
+    public function promote(int $id): bool
+    {
+        try {
+            $sql = "UPDATE users SET role = 'admin' WHERE id = :id";
+
+            $params = ['id' => $id];
+
+            $stmt = $this->db->prepare($sql);
+
+            return $stmt->execute($params);
+
+        } catch(Exception $e){
+            return false;
+        }
+    }
+    public function demote(int $id): bool
+    {
+        try {
+            $sql = "UPDATE users SET role = 'user' WHERE id = :id";
+
+            $params = ['id' => $id];
+
+            $stmt = $this->db->prepare($sql);
+
+            return $stmt->execute($params);
+
+        } catch(Exception $e){
+            return false;
         }
     }
 }

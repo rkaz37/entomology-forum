@@ -51,12 +51,12 @@ CREATE TABLE contacts (
 );
 
 INSERT INTO users (username, email, password, role, image, bio) VALUES
-('admin', 'admin@admin.com', '$2y$10$FiXwJ.Y9GjRi0vZL6h331Ot56uIq9Apkr7zioO//gkv1uYDRamDBi', 'admin', '../vault/pfp1.png', 'admin ucet hehe'),
-('magor', 'magor37@magor.com', '$2y$10$FiXwJ.Y9GjRi0vZL6h331Ot56uIq9Apkr7zioO//gkv1uYDRamDBi', 'user', '../vault/pfp2.png', 'trol');
+('admin', 'admin@admin.com', '$2y$10$FiXwJ.Y9GjRi0vZL6h331Ot56uIq9Apkr7zioO//gkv1uYDRamDBi', 'admin', '../vault/pfp1.png', 'admin of this site, photographer'),
+('user', 'user@user.com', '$2y$10$FiXwJ.Y9GjRi0vZL6h331Ot56uIq9Apkr7zioO//gkv1uYDRamDBi', 'user', '../vault/pfp2.png', 'bug enthusiast');
 
 
 INSERT INTO posts (title, content, user_id, image, published_at) VALUES
-('ID request', 'I've seen this bug today, anyone have any idea what it is?', 2, '../vault/test1.png', '2026-03-20 10:00:00'),
+('ID request', 'Ive seen this bug today, anyone have any idea what it is?', 2, '../vault/test1.png', '2026-03-20 10:00:00'),
 ('Favorite butterfly?', 'What is your favorite butterfly/moth OAT?',  1, '../vault/test2.png', '2026-03-20 10:00:00');
 
 INSERT INTO potd (post_id, created_at) VALUES
@@ -67,6 +67,6 @@ INSERT INTO contacts (username, email, message) VALUES
 ('magor', 'magor37@magor.com', 'hehe');
 
 INSERT INTO comments (post_id, reply_id, content, user_id,  published_at) VALUES
-(1, NULL,'hehehehe', 1, '2026-03-20 10:00:00'),
-(1, 1,'a to velmi', 2, '2026-03-20 10:00:00'),
-(2, NULL,'a to velmi', 2, '2026-03-20 10:00:00');
+(1, NULL,'Pretty sure its Scorpionfly, sc. name Panorpa communis.', 1, '2026-03-20 10:00:00'),
+(1, 1,'Thank you!', 2, '2026-03-20 10:00:00'),
+(2, NULL,'Mines are Swallowtails!', 2, '2026-03-20 10:00:00');

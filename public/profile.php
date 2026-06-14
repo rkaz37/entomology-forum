@@ -34,16 +34,6 @@
                             </div>
                         </div>
                     </div>
-                    <?php if($isAdmin ?? $p->user_id == $_SESSION['id']): ?>
-                                <form method="POST"  onsubmit="return confirm('Naozaj vymazať?')">
-                                    <input type="hidden" name="action" value="delete">
-                                    <input type="hidden" name="type" value="post">
-                                    <input type="hidden" name="id" value="<?php echo $p->id; ?>">
-                                    <button type="submit" style="color:red; cursor:pointer;">
-                                            Delete
-                                    </button>
-                                </form>
-                    <?php endif; ?>
 
                 <?php endforeach; ?>
             <?php else: ?>

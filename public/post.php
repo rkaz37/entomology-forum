@@ -9,12 +9,12 @@
     //echo count($comments);
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'comment') {
     $content = $_POST['content'] ?? '';
-    $user_id = isset($_POST['user_id']) ? (int)$_POST['user_id'] : 1;
+    $user_id = (int)$_SESSION['id'];
 
 
         $comment->create($content, $user_id, $id);
 
-        header('Location: post.php?id=' . $id);
+        Redirect::redirect('post.php?id=' . $id);
         exit;
     }
 
