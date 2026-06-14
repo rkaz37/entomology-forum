@@ -31,6 +31,7 @@ class Post extends Model
     {
         try {
             $stmt = $this->db->prepare("SELECT * FROM posts WHERE id = :id");
+            //$stmt = $this->db->prepare("SELECT * , users.username as username FROM posts JOIN users ON posts.user_id = users.id WHERE id = :id");
             $stmt->execute(['id' => $id]);
 
             return $stmt->fetch();

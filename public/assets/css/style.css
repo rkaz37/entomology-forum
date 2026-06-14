@@ -14,7 +14,7 @@
     margin: 25px;
 }
 
-.profile img{
+img{
     border-radius: 25px;
     border-width: 3px;
     border-style: solid;
@@ -60,6 +60,13 @@ a{
     padding: 10px;
 }
 
+.flex{
+    display: flex;
+    justify-content: start;
+    gap: 10px;
+    margin-top: 10px;
+}
+
 .button{
     border-radius: 15px;
     border-width: 3px;
@@ -72,4 +79,20 @@ a{
 
 .post{
     margin: 5px;
+}
+
+.minipfp{
+    width: 40px;
+    height: 40px;
+}
+
+.comment{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 5px;
+}
+
+.content{
+    white-space: pre-wrap;
 }

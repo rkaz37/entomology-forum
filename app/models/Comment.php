@@ -23,10 +23,7 @@ class Comment extends Model
     public function all(int $id): array
     {
         try {
-            $stmt = $this->db->query("SELECT comments.*, users.username as username 
-            FROM comments 
-            JOIN users ON comments.user_id = users.id
-            WHERE comments.post_id = " . $id);
+            $stmt = $this->db->query("SELECT comments.*, users.username AS username, users.image AS image FROM comments JOIN users ON comments.user_id = users.id WHERE comments.post_id = " . $id);
             return $stmt->fetchAll();
         } catch (PDOException $e) {
             

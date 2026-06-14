@@ -6,7 +6,7 @@
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = $_POST['title'] ?? '';
     $content = $_POST['content'] ?? '';
-    $user_id = isset($_SESSION['id']);
+    $user_id = $_SESSION['id'];
     $published_at = $_POST['published_at'] ?? null;
     $image = $_POST['image'] ?? '../vault/default.png';
 

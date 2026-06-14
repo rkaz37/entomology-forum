@@ -31,25 +31,31 @@
 ?>
 
 <?php
-    $post = $post->find($id);
+    $p = $post->find($id);
     
 ?>
 <div class="container" id="post">
-    <img src="<?= $post->image ?>">
-    <?php 
-        
-        echo $post->title;
-        echo "<br>";
-        echo $post->content;
-    ?>
+    <h2> <?= $p->title ?></h2> 
+    by 
+    <a href="profile.php?id=<?= $p->user_id ?>"> a </a>
+    <br>
+    <div class="flex">
+        <img src="<?= $p->image ?>">
+        <div>
+            <p class="content"><?= htmlspecialchars($p->content) ?></p>
+        </div>
+    </div>
+</div>
 
 <div class="container" id="comments">
 
         <div>
                     <?php foreach ($comments as $c): ?>
-                            <?php echo htmlspecialchars($c->id); ?>
-                            <?php echo '<a href="profile.php?id=' . $c->user_id . '">' . htmlspecialchars($c->username) . '</a>'; ?>
-                            <?php echo htmlspecialchars($c->content); ?>
+                        <div class="comment">
+                            <img class="minipfp" src="<?= $c->image ?>">
+                            <h3> <a href="profile.php?id= <?= $c->user_id ?>"> <?= htmlspecialchars($c->username) ?>: </a> </h3>
+                            <p class="content"><?= htmlspecialchars($c->content) ?></p>
+                        </div>
                             <?php echo htmlspecialchars($c->reply_id); ?>
                             <?php if($c->reply_id === NULL) echo 'y'; ?>
                             <?php if ($isAdmin): ?>
