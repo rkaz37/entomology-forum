@@ -22,6 +22,14 @@ img{
     height: 250px;
 }
 
+.inline{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .username{
     margin-top: 0px;
     margin-left: 10px;
@@ -42,7 +50,7 @@ img{
 body{
     font-family: 'Courier New', Courier, monospace;
     color: rgb(30, 128, 30);
-    background-color:rgb(240, 228, 211);
+    background-color:rgb(253, 243, 216);
     
 }
 
@@ -127,4 +135,34 @@ a{
     border-style: solid;
     border-color: rgb(30, 128, 30);
     color: rgb(30, 128, 30);
+}
+
+table{
+    border-collapse: collapse;
+    min-width: 800px;
+}
+
+thead th{
+    position: sticky;
+    top: 0;
+    background-color: rgb(253, 243, 216);
+    z-index: 1;
+}
+
+.table-container{
+    overflow: auto;
+    max-height: 200px;
+}
+
+.scroll{
+    min-width: 800px;
+    overflow: auto;
+    max-height: 570px;
+}
+
+.edit{
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    flex-direction: column;
 }

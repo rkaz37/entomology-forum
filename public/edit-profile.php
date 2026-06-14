@@ -43,52 +43,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 
-<form class="login-form" method="POST" enctype="multipart/form-data">
+<form class="container edit form" method="POST" enctype="multipart/form-data">
     <div>
-        <label class="form-label" for="username">username</label>
-                        <input type="text"
-                            id="username"
-                            name="username"
-                            class="form-input"
-                            placeholder="your cool username :3"
-                            value="<?= htmlspecialchars($user_data->username) ?>"
-                            required
-                        >
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Username" value="<?= htmlspecialchars($user_data->username) ?>" required>
+    </div>
 
+    <div>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Email" value="<?= htmlspecialchars($user_data->email) ?>" required>   
+    </div>      
+    
+    <div class="flex">
+        <label for="bio">Bio</label>
+        <textarea rows="10" id="bio" name="bio" placeholder="bio"><?= htmlspecialchars($user_data->bio) ?></textarea>
+    </div>
 
+    <div>
+        <label for="image">Obrázok</label>
+        <input id="image" type="file" name="image" value=".jpg,.jpeg,.png,.webp">
+    </div>
+    <button type="submit">SAVE</button>
+</form>
 
-        <label class="form-label" for="email">email</label>
-                        <input type="email"
-                            id="email"
-                            name="email"
-                            class="form-input"
-                            placeholder="email"
-                            value="<?= htmlspecialchars($user_data->email) ?>"
-                            required
-                        >                
-        <label class="form-label" for="bio">bio</label>
-                        <input type="text"
-                            id="bio"
-                            name="bio"
-                            class="form-input"
-                            placeholder="bio"
-                            value="<?= htmlspecialchars($user_data->bio) ?>"
-                        > 
-
-                <label class="form-label" for="image">Obrázok</label>
-                <input
-                    id="image"
-                    type="file"
-                    name="image"
-                    value=".jpg,.jpeg,.png,.webp"
-                    style="width:100%; padding:0.85rem 1rem;"
-                >
-
-
-
-                    
-
-                    <button type="submit">
-                        SAVE
-                    </button>
-                </form>
+<?php include_once 'partials/footer.php'; ?>

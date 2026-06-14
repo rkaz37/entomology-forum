@@ -25,7 +25,7 @@
         $comment->delete($cid);
     }
 
-    header('Location: post.php?id=' . $id);
+    Redirect::redirect('post.php?id=' . $id);
     exit;
 }
 ?>
@@ -35,9 +35,9 @@
     
 ?>
 <div class="container" id="post">
-    <h2> <?= $p->title ?></h2> 
+    <h3> <?= $p->title ?></h3> 
     by 
-    <a href="profile.php?id=<?= $p->user_id ?>"> a </a>
+    <b><a href="profile.php?id=<?= $p->user_id ?>"><?= $p->username ?></a></b>
     <br>
     <div class="flex">
         <img src="<?= $p->image ?>">
@@ -56,9 +56,6 @@
                             <img class="minipfp" src="<?= $c->image ?>">
                             <h3>  <?= htmlspecialchars($c->username) ?>: </a> </h3>
                             <p class="content"><?= htmlspecialchars($c->content) ?></p>
-                        </div>
-                            <?php echo htmlspecialchars($c->reply_id); ?>
-                            <?php if($c->reply_id === NULL) echo 'y'; ?>
                             <?php if ($isAdmin): ?>
                                 <form method="POST"  onsubmit="return confirm('Naozaj vymazať?')">
                                     <input type="hidden" name="action" value="delete">
@@ -67,6 +64,7 @@
                                     <button type="submit" style="color:red; cursor:pointer;">Delete</button>
                                 </form>
                             <?php endif; ?>
+                        </div>
                             <?php echo '<br>' ?>
 
                             
@@ -79,11 +77,17 @@
                     <?php endif; ?>
 
                     <?php if (Auth::check()): ?>
-                        <form method="POST" enctype="multipart/form-data" style="padding:0 1.5rem 1.5rem;">
-                            <textarea name="content" rows="10" placeholder="add comment..." required></textarea>
-                            <input type="hidden" name="action" value="comment">
-                            <button type="submit" class="btn">send</button>
-                        </form>
+                        <button type="button" onclick="document.getElementById('commentForm').style.display='Block'">Comment</button>
+
+                            <form method="POST" id="commentForm" enctype="multipart/form-data" style="display:none;">
+                                <textarea name="content" rows="10" placeholder="add comment..." required></textarea>
+                                <input type="hidden" name="action" value="comment">
+                                <button type="submit" class="btn">send</button>
+                            </form>
+
                     <?php endif; ?>
 \
         </div>
+
+
+<?php include_once 'partials/footer.php'; ?>

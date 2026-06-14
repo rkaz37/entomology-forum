@@ -3,6 +3,11 @@
 
     $postModel = new Post();
     $allPosts = $postModel->all();
+    $sessionID = false;
+
+    if(isset($_SESSION['id'])){
+        $sessionID = true;
+    }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete') {
     $pid = isset($_POST['id']) ? (int)$_POST['id'] : 0;
@@ -11,12 +16,12 @@
         $postModel->delete($pid);
     }
 
-    header('Location: forum.php');
+    Redirect::redirect('forum.php');
     exit;
 }
 ?>
 
-<div class="container">
+<div class="container scroll">
 <?php if (Auth::check()): ?>
                 <a class="button" margin="5px" href="create-post.php">+POST</a>
 <?php endif; ?>
@@ -37,7 +42,7 @@
                                 
                             
                         </div>
-                        <?php if ($isAdmin || $_SESSION['id'] == $p->user_id): ?>
+                        <?php if ($isAdmin || (Auth::check() && ($_SESSION['id'] == $p->user_id))): ?>
                                 <form method="POST"  onsubmit="return confirm('delete?')">
                                     <input type="hidden" name="action" value="delete">
                                     <input type="hidden" name="type" value="post">
@@ -60,3 +65,4 @@
     </div>
 </div>
 
+<?php include_once 'partials/footer.php'; ?>

@@ -48,3 +48,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <button type="submit" class="button">Sign In!</button>
 </form>
+
+
+<?php include_once 'partials/footer.php'; ?>

@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS minimalism_forum;
-CREATE DATABASE minimalism_forum CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE minimalism_forum;
+DROP DATABASE IF EXISTS forum;
+CREATE DATABASE forum CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE forum;
 
 CREATE TABLE users (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -28,8 +28,7 @@ CREATE TABLE posts (
 CREATE TABLE potd (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     post_id INT UNSIGNED NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_posts_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE comments (
@@ -52,15 +51,15 @@ CREATE TABLE contacts (
 );
 
 INSERT INTO users (username, email, password, role, image, bio) VALUES
-('admin', 'admin@admin.com', '$2y$10$FiXwJ.Y9GjRi0vZL6h331Ot56uIq9Apkr7zioO//gkv1uYDRamDBi', 'admin', '../vault/buni.png', 'admin ucet hehe'),
-('magor', 'magor37@magor.com', '$2y$10$FiXwJ.Y9GjRi0vZL6h331Ot56uIq9Apkr7zioO//gkv1uYDRamDBi', 'user', '../vault/sb.png', 'trol');
+('admin', 'admin@admin.com', '$2y$10$FiXwJ.Y9GjRi0vZL6h331Ot56uIq9Apkr7zioO//gkv1uYDRamDBi', 'admin', '../vault/pfp1.png', 'admin ucet hehe'),
+('magor', 'magor37@magor.com', '$2y$10$FiXwJ.Y9GjRi0vZL6h331Ot56uIq9Apkr7zioO//gkv1uYDRamDBi', 'user', '../vault/pfp2.png', 'trol');
 
 
 INSERT INTO posts (title, content, user_id, image, published_at) VALUES
-('troll post', 'blablablablablablablablablablablablablabla', 2, '../vault/sb.png', '2026-03-20 10:00:00'),
-('ADMIN POST', 'blablablablablablablablablablablablablablaaaaaaaaaaa',  1, '../vault/sb.png', '2026-03-20 10:00:00');
+('ID request', 'I've seen this bug today, anyone have any idea what it is?', 2, '../vault/test1.png', '2026-03-20 10:00:00'),
+('Favorite butterfly?', 'What is your favorite butterfly/moth OAT?',  1, '../vault/test2.png', '2026-03-20 10:00:00');
 
-INSERT INTO posts (post_id, created_at) VALUES
+INSERT INTO potd (post_id, created_at) VALUES
 (2, '2026-03-20 10:00:00');
 
 

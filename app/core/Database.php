@@ -3,7 +3,7 @@
 class Database
 {
     private string $host = 'localhost';
-    private string $dbname = 'minimalism_forum';
+    private string $dbname = 'forum';
     private string $username = 'root';
     private string $password = '';
 

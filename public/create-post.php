@@ -4,11 +4,11 @@
     $post = new Post();
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $title = $_POST['title'] ?? '';
-    $content = $_POST['content'] ?? '';
-    $user_id = $_SESSION['id'];
-    $published_at = $_POST['published_at'] ?? null;
-    $image = $_POST['image'] ?? '../vault/default.png';
+        $title = $_POST['title'] ?? '';
+        $content = $_POST['content'] ?? '';
+        $user_id = $_SESSION['id'];
+        $published_at = $_POST['published_at'] ?? null;
+        $image = $_POST['image'] ?? '../vault/default.png';
 
 
         if (isset($_FILES['image']) && $_FILES['image']['error'] === 0){
@@ -25,7 +25,7 @@
         }
         $post->create($title, $content, $user_id, $image);
 
-        header('Location: forum.php');
+        Rdirect::redirect('forum.php');
         exit;
     }
 
@@ -54,3 +54,5 @@
                 <button type="submit" class="button">Save Post</button>
         </form>
 </div>
+
+<?php include_once 'partials/footer.php'; ?>

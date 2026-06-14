@@ -22,3 +22,5 @@
         <br>
     </form>
 </div>
+
+<?php include_once 'partials/footer.php'; ?>

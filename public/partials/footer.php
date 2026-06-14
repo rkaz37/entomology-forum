@@ -1,0 +1,1 @@
+<footer class="flex" style="position: fixed; bottom: 0; left: 50; width: 100%;"> Copyright R.K. 2026 </footer>

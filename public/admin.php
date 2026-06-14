@@ -9,28 +9,29 @@
     $users = $user->all();
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete') {
-    $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
-    $type = $_POST['type'] ?? '';
+        $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+        $type = $_POST['type'] ?? '';
 
-    if ($id > 0) {
+        if ($id > 0) {
 
-        if ($type === 'post') {
-            $post->delete($id);
+            if ($type === 'post') {
+                $post->delete($id);
+            }
+
+            if ($type === 'user') {
+                $user->delete($id);
+            }
+
         }
 
-        if ($type === 'category') {
-            $category->delete($id);
-        }
-
-        if ($type === 'user') {
-            $user->delete($id);
-        }
-
-    }
-
-    header('Location: admin.php');
-    exit;
+        Redirect::redirect('admin.php');
+        exit;
 }
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'potd'){
+        $post->potd($_POST['id']);
+        Redirect::redirect('admin.php');
+        exit;
+    }
     
     
 ?>
@@ -48,11 +49,7 @@
 
 <div class="container" id="posts">
         <div>
-            <div>
-                <h3>Posts</h3>
-                <p class="card-subtitle">CRUD for posts</p>
-            </div>
-            <a href="blog-post-create.php" class="btn btn-ghost">+ New Post</a>
+            <h3>Posts:</h3>
         </div>
 
         <div class="table-container">
@@ -63,38 +60,30 @@
                         <th>Title</th>
                         <th>User ID</th>
                         <th>Date</th>
-                        <th>Status</th>
-                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($posts as $p): ?>
                         <tr>
-                            <td>#<?php echo htmlspecialchars($p->id); ?></td>
-                            <td>
-                                <div>
-                                    <?php echo htmlspecialchars($p->title); ?>
-                                </div>
-                            </td>
-                            <td><?php echo htmlspecialchars($p->user_id); ?></td>
-                            <td><?php echo htmlspecialchars($p->created_at); ?></td>
-                            <td>
-                                <?php if ($p->status === 'published'): ?>
-                                    <span>Published</span>
-                                <?php else: ?>
-                                    <span>Draft</span>
-                                <?php endif; ?>
-                            </td>
+                            <td>#<?= htmlspecialchars($p->id) ?></td>
+                            <td><?= htmlspecialchars($p->title) ?></td>
+                            <td><?= htmlspecialchars($p->user_id) ?></td>
+                            <td><?= htmlspecialchars($p->created_at) ?></td>
                             <td>
                                 <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-                                    <a href="blog-post-edit.php?id=<?php echo $p->id; ?>" class="btn btn-ghost">
-                                        Edit
-                                    </a>
+                                    <form method="POST"  onsubmit="return confirm('Make post of the day?')">
+                                        <input type="hidden" name="action" value="potd">
+                                        <input type="hidden" name="type" value="post">
+                                        <input type="hidden" name="id" value="<?= $p->id ?>">
+                                        <button type="submit" style="color:red; cursor:pointer;">
+                                            potd
+                                        </button>
+                                    </form>
 
-                                    <form method="POST"  onsubmit="return confirm('Naozaj vymazať?')">
+                                    <form method="POST"  onsubmit="return confirm('Delete?')">
                                         <input type="hidden" name="action" value="delete">
                                         <input type="hidden" name="type" value="post">
-                                        <input type="hidden" name="id" value="<?php echo $p->id; ?>">
+                                        <input type="hidden" name="id" value="<?= $p->id ?>">
                                         <button type="submit" style="color:red; cursor:pointer;">
                                             Delete
                                         </button>
@@ -172,3 +161,4 @@
         </div>
     </div>
 
+<?php include_once 'partials/footer.php'; ?>
