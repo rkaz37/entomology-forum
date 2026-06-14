@@ -64,9 +64,7 @@
                                     <input type="hidden" name="action" value="delete">
                                     <input type="hidden" name="type" value="post">
                                     <input type="hidden" name="id" value="<?php echo $c->id; ?>">
-                                    <button type="submit" style="color:red; cursor:pointer;">
-                                            Delete
-                                    </button>
+                                    <button type="submit" style="color:red; cursor:pointer;">Delete</button>
                                 </form>
                             <?php endif; ?>
                             <?php echo '<br>' ?>
@@ -77,25 +75,15 @@
                     <?php endforeach; ?>
 
                     <?php if (empty($comments)): ?>
-                            <p> no comments</p>
+                            <p> no comments!</p>
                     <?php endif; ?>
 
                     <?php if (Auth::check()): ?>
-    <form method="POST" enctype="multipart/form-data" style="padding:0 1.5rem 1.5rem;">
-
-            <div style="margin-bottom:1rem;">
-                <textarea
-                    name="content"
-                    rows="10"
-                    placeholder="add cooment"
-                    required
-                    style="width:100%; padding:0.85rem 1rem;"
-                ></textarea>
-            </div>
-
-    <input type="hidden" name="action" value="comment">
-    <button type="submit" class="btn">send</button>
-</form>
+                        <form method="POST" enctype="multipart/form-data" style="padding:0 1.5rem 1.5rem;">
+                            <textarea name="content" rows="10" placeholder="add comment..." required></textarea>
+                            <input type="hidden" name="action" value="comment">
+                            <button type="submit" class="btn">send</button>
+                        </form>
                     <?php endif; ?>
+\
         </div>
-    </div>

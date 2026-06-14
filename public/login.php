@@ -15,45 +15,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         Redirect::redirect('home.php');
     }
 
-    $error = 'Nesprávny email alebo heslo.';
+    $error = 'Wrong Username or Password!';
 }
 ?>
 
-<form class="login-form" method="POST">
+<form class="container form" method="POST">
+    <h2>login:</h2>
     <div>
-        <label class="form-label" for="username">username</label>
-                        <input type="text"
-                            id="username"
-                            name="username"
-                            class="form-input"
-                            placeholder="username"
-                            value="<?= htmlspecialchars($_POST['username'] ?? '') ?>"
-                            required
-                        >
+        <label for="username">Username: </label>
+        <input type="text" id="username" name="username" placeholder="Username" value="<?= htmlspecialchars($_POST['username'] ?? '') ?>" required>
+    </div>
+    <div>
+        <label for="password" style="margin-bottom: 0;">Password: </label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" value="<?= htmlspecialchars($_POST['password'] ?? '') ?>" required>
+    </div>
 
 
+    <?php if ($error): ?>
+       <p style="color: #dc2626; font-size: 0.875rem; margin-bottom: 1rem;">
+            <?= htmlspecialchars($error) ?>
+        </p>
+    <?php endif; ?>
 
-                        
-        <label class="form-label" for="password" style="margin-bottom: 0;">Password</label>
-
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            class="form-input"
-                            placeholder="Enter your password"
-                            value="<?= htmlspecialchars($_POST['password'] ?? '') ?>"
-                            required
-                        >
-
-
-                    <?php if ($error): ?>
-                        <p style="color: #dc2626; font-size: 0.875rem; margin-bottom: 1rem;">
-                            <?= htmlspecialchars($error) ?>
-                        </p>
-                    <?php endif; ?>
-
-                    <button type="submit">
-                        Sign In
-                    </button>
-                </form>
+    <button type="submit" class="button">Sign In</button>
+</form>

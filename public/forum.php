@@ -16,70 +16,39 @@
 }
 ?>
 
+<div class="container">
 <?php if (Auth::check()): ?>
-                <a href="create-post.php">+POST</a>
+                <a class="button" margin="5px" href="create-post.php">+POST</a>
 <?php endif; ?>
 
 
-<section>
+
     <div>
         <div>
             <?php if (!empty($allPosts)): ?>
                 <?php foreach ($allPosts as $p): ?>
-                    <?php
-                    /*
-                        // Logika pre obrázok (rovnaká ako na home.php)
-                        $imagePath = '../assets/images/item1.jpg'; // default
-                        if (!empty($p->image)) {
-                            if (file_exists(__DIR__ . '/../uploads/' . $p->image)) {
-                                $imagePath = '../uploads/' . $p->image;
-                            } else {
-                                $imagePath = '../assets/images/' . $p->image;
-                            }
-                        }
-                            */
-                    ?>
-
-                    <div class='container post'>
-                        <figure>
-                            <a href="post.php?id=<?php echo $p->id; ?>">
-                                
-                            </a>
-                        </figure>
+                    <a class="container post flex" href="post.php?id=<?= $p->id ?>">
+                        <img class="posts_img" src="<?= $p->image ?>">
                         <div>
+                            <h3><?= htmlspecialchars($p->title) ?></h3>
+                            by
+                            <b><?= htmlspecialchars($p->username) ?></b>
+                            <?= date('d.M/Y', strtotime($p->created_at)); ?>
+                                
                             
-                            <h3>
-                                <a href="post.php?id=<?php echo $p->id; ?>">
-                                    <?php echo htmlspecialchars($p->title); ?>
-                                </a>
-                            </h3>               
-                            
-                            <div>
-                                <span class="author">
-                                    <span class="sp">by</span>
-                                    <span class="author-name">
-                                        <?php echo htmlspecialchars($p->username ?? '???ERROR???'); ?>
-                                    </span>
-                                </span>
-                                <span class="meta-date">
-                                    <span class="sp">-</span>
-                                    <time class="published">
-                                        <?php echo date('M d, Y', strtotime($p->created_at)); ?>
-                                    </time>
-                                </span>
-                            </div>
                         </div>
-                    </div>
-                    <?php if ($isAdmin): ?>
-                                <form method="POST"  onsubmit="return confirm('Naozaj vymazať?')">
+                        <?php if ($isAdmin || $_SESSION['id'] == $p->user_id): ?>
+                                <form method="POST"  onsubmit="return confirm('delete?')">
                                     <input type="hidden" name="action" value="delete">
                                     <input type="hidden" name="type" value="post">
-                                    <input type="hidden" name="id" value="<?php echo $p->id; ?>">
+                                    <input type="hidden" name="id" value="<?= $p->id ?>">
                                     <button type="submit" style="color:red; cursor:pointer;">
                                             Delete
                                     </button>
                                 </form>
-                    <?php endif; ?>
+                        <?php endif; ?>  
+                    </a>
+                    
 
                 <?php endforeach; ?>
             <?php else: ?>
@@ -89,5 +58,5 @@
             <?php endif; ?>
         </div>
     </div>
-</section>
+</div>
 

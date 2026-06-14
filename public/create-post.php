@@ -31,59 +31,26 @@
 
 ?>
 
-<main class="main-content">
-    <div class="page-header">
-        <h1 class="greeting">Create Blog Post</h1>
-        <p class="greeting-sub">Samostatná stránka pre vytvorenie nového blog postu.</p>
-    </div>
-
-    <div class="card">
-        <div class="card-header">
-            <div>
-                <h3 class="card-title">New Post Form</h3>
-                <p class="card-subtitle">Formulár pre vytvorenie blog postu</p>
-            </div>
-            <span class="badge badge-green">Create</span>
-        </div>
-//data z roznych zdrojov
+<div class="container">
+        <h1>Create Blog Post!</h1>
         <form method="POST" enctype="multipart/form-data" style="padding:0 1.5rem 1.5rem;">
 
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:1rem; margin-bottom:1rem;">
-                <div>
-                    <label>Názov</label>
-                    <input
-                        type="text"
-                        name="title"
-                        placeholder="Zadaj názov blog postu"
-                        required
-                        style="width:100%; padding:0.85rem 1rem;"
-                    >
+            <div class="container">
+                <div class="flex">
+                    <label>Title:</label>
+                    <input type="text" name="title" placeholder="Add title..." required>
                 </div>
 
+                <div class="flex">
+                    <label>Content:</label>
+                    <textarea name="content" rows="10" placeholder="Add content..." required></textarea>
+                </div>
 
-            </div>
+                <div class="flex">
+                    <label>Image:</label>
+                    <input id="image" type="file" name="image" value=".jpg,.jpeg,.png,.webp">
+                </div>
 
-
-            <div style="margin-bottom:1rem;">
-                <label>Obsah</label>
-                <textarea
-                    name="content"
-                    rows="10"
-                    placeholder="Sem príde obsah blog postu..."
-                    required
-                    style="width:100%; padding:0.85rem 1rem;"
-                ></textarea>
-            </div>
-            <label class="form-label" for="image">Obrázok</label>
-                <input
-                    id="image"
-                    type="file"
-                    name="image"
-                    value=".jpg,.jpeg,.png,.webp"
-                    style="width:100%; padding:0.85rem 1rem;"
-                >
-
-
-    <button type="submit" class="btn">Save Post</button>
-</form>
-</main>
+                <button type="submit" class="button">Save Post</button>
+        </form>
+</div>

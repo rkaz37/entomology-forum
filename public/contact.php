@@ -12,16 +12,13 @@
           }
 ?>
 
-<div class="container" >
-    <h3>Send message to us!</h3>
-    <form class="container" name="contact-form" action="contact.php" method="POST">
-        <input type="text" minlength="2" name="name" placeholder="Name" class="form-control" required>
-        <br>
-        <input type="email" name="email" placeholder="E-mail" class="form-control" required>
-        <br>
-        <textarea class="" name="message" placeholder="Message" style="height: 150px;" required></textarea>
-        <br>
-        <button type="submit" name="submit">Submit</button>
+<div class="container form" >
+    <h1>Send message to us!</h1>
+    <form class="form" method="POST">
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="email" name="email" placeholder="E-mail" required>
+        <textarea name="message" placeholder="Message" style="height: 150px;" required></textarea>
+        <button type="submit" name="submit" class="button">Submit</button>
         <br>
     </form>
 </div>

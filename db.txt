@@ -17,12 +17,18 @@ CREATE TABLE posts (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(180) NOT NULL,
     content LONGTEXT NOT NULL,
-    status ENUM('draft', 'published') NOT NULL DEFAULT 'draft',
     user_id INT UNSIGNED NOT NULL,
     image VARCHAR(100) NOT NULL, 
     published_at DATETIME NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_posts_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT
+);
+
+CREATE TABLE potd (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    post_id INT UNSIGNED NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_posts_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT
 );
 
@@ -53,6 +59,9 @@ INSERT INTO users (username, email, password, role, image, bio) VALUES
 INSERT INTO posts (title, content, user_id, image, published_at) VALUES
 ('troll post', 'blablablablablablablablablablablablablabla', 2, '../vault/sb.png', '2026-03-20 10:00:00'),
 ('ADMIN POST', 'blablablablablablablablablablablablablablaaaaaaaaaaa',  1, '../vault/sb.png', '2026-03-20 10:00:00');
+
+INSERT INTO posts (post_id, created_at) VALUES
+(2, '2026-03-20 10:00:00');
 
 
 INSERT INTO contacts (username, email, message) VALUES

@@ -8,7 +8,7 @@
 
 .profile-all{
     display: flex;
-    align-items:center;
+    align-items:start;
     justify-content:start;
     font-weight: bold;
     margin: 25px;
@@ -72,13 +72,19 @@ a{
     border-width: 3px;
     padding: 3px;
     border-style: solid;
-    border-color: crimson;
-    background-color: crimson;
+    border-color: rgb(30, 128, 30);
+    background-color: rgb(30, 128, 30);
     color: black;
+    font-weight: bold;
 }
 
 .post{
     margin: 5px;
+}
+
+.posts_img{
+    width: 100px;
+    height: 100px;
 }
 
 .minipfp{
@@ -95,4 +101,30 @@ a{
 
 .content{
     white-space: pre-wrap;
+}
+
+.form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form input{
+    border-radius: 15px;
+    border-width: 3px;
+    padding: 3px;
+    border-style: solid;
+    border-color: rgb(30, 128, 30);
+    color: rgb(30, 128, 30);
+}
+
+.form textarea{
+    border-radius: 15px;
+    border-width: 3px;
+    padding: 3px;
+    border-style: solid;
+    border-color: rgb(30, 128, 30);
+    color: rgb(30, 128, 30);
 }
