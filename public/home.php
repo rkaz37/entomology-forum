@@ -2,4 +2,4 @@
     include_once 'partials/header.php';
 ?>
 
-<h1> SCUFFED FORUMS </h1>
+<h1> ENTOMOLOGY FORUMS </h1>

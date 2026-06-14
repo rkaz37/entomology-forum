@@ -52,8 +52,9 @@
         <div>
                     <?php foreach ($comments as $c): ?>
                         <div class="comment">
+                            <a href="profile.php?id= <?= $c->user_id ?>">
                             <img class="minipfp" src="<?= $c->image ?>">
-                            <h3> <a href="profile.php?id= <?= $c->user_id ?>"> <?= htmlspecialchars($c->username) ?>: </a> </h3>
+                            <h3>  <?= htmlspecialchars($c->username) ?>: </a> </h3>
                             <p class="content"><?= htmlspecialchars($c->content) ?></p>
                         </div>
                             <?php echo htmlspecialchars($c->reply_id); ?>
