@@ -6,10 +6,7 @@ class Comment extends Model
     public function show(int $id)
     {
         try {
-            $stmt = $this->db->query("SELECT comments.*, users.username as username 
-            FROM comments 
-            JOIN users ON comments.user_id = users.id
-            WHERE comments.post_id = " . $id);
+            $stmt = $this->db->query("SELECT comments.*, users.username as username FROM comments JOIN users ON comments.user_id = users.id WHERE comments.post_id = " . $id);
 
             $post = $stmt->fetch();
             echo $post->title;
@@ -38,7 +35,6 @@ class Comment extends Model
             $stmt->execute(['id' => $id]);
             return $stmt->fetch();
         } catch (PDOException $e) {
-            //Helper::log("Post::find ERROR: " . $e->getMessage(), 'ERROR');
             return false;
         }
     }
@@ -53,9 +49,7 @@ class Comment extends Model
                     VALUES (:id, :content, :user_id)";
             
             $stmt = $this->db->prepare($sql);
-            $stmt->execute([
-                'id' => $id, 'content' => $content, 'user_id' => $user_id
-            ]);
+            $stmt->execute(['id' => $id, 'content' => $content, 'user_id' => $user_id]);
 
             $postId = $this->db->lastInsertId();
             
@@ -64,7 +58,6 @@ class Comment extends Model
             return true;
         } catch (PDOException $e) {
             if ($this->db->inTransaction()) $this->db->rollBack();
-            //Helper::log("Post::create ERROR: " . $e->getMessage(), 'ERROR');
             return false;
         }
     }

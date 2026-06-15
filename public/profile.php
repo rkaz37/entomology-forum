@@ -18,22 +18,28 @@
     <div class="profile-posts scroll">
         <?php if (!empty($allPosts)): ?>
                 <?php foreach ($allPosts as $p): ?>
-                    <div class='container post'>
-                        <div>  
-                            <h3>
-                                <a href="post.php?id=<?= $p->id ?>"> <?php echo htmlspecialchars($p->title); ?> </a>
-                            </h3>               
+                    <a class="container post flex" href="post.php?id=<?= $p->id ?>">
+                        <img class="posts_img" src="<?= $p->image ?>">
+                        <div>
+                            <h3><?= htmlspecialchars($p->title) ?></h3>
+                            by
+                            <b><?= htmlspecialchars($p->username) ?></b>
+                            <?= date('d.M/Y', strtotime($p->created_at)); ?>
+                                
                             
-                            <div class="author">
-                                <p> by 
-                                    <a href="profile.php?id=<?= $p->user_id ?>"> <?= htmlspecialchars($p->username) ?> </a>
-                                    -
-                                    <time class="published">
-                                        <?= date('d. M/Y', strtotime($p->created_at)); ?>
-                                    </time>
-                            </div>
                         </div>
-                    </div>
+                        <?php if ($isAdmin || (Auth::check() && ($_SESSION['id'] == $p->user_id))): ?>
+                                <form method="POST"  onsubmit="return confirm('delete?')">
+                                    <input type="hidden" name="action" value="delete">
+                                    <input type="hidden" name="type" value="post">
+                                    <input type="hidden" name="id" value="<?= $p->id ?>">
+                                    <button type="submit" style="color:red; cursor:pointer;">
+                                            Delete
+                                    </button>
+                                </form>
+                        <?php endif; ?>  
+                    </a>
+                    
 
                 <?php endforeach; ?>
             <?php else: ?>

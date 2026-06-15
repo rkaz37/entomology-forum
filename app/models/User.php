@@ -2,8 +2,7 @@
 require_once 'Model.php';
 class User extends Model
 {
-
-    // READ - všetci používatelia + ich posty
+    
     public function all(): array
     {
         try {

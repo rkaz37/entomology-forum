@@ -18,7 +18,7 @@
         exit;
     }
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'commentdel') {
     $cid = isset($_POST['id']) ? (int)$_POST['id'] : 0;
 
     if ($cid > 0) {
@@ -28,10 +28,18 @@
     Redirect::redirect('post.php?id=' . $id);
     exit;
 }
-?>
 
-<?php
-    $p = $post->find($id);
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete') {
+    $pid = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+
+    if ($pid > 0) {
+        $post->delete($pid);
+    }
+
+    Redirect::redirect('forum.php');
+    exit;
+}
+$p = $post->find($id);
     
 ?>
 <div class="container" id="post">
@@ -45,7 +53,16 @@
             <p class="content"><?= htmlspecialchars($p->content) ?></p>
         </div>
     </div>
+    <?php if ($isAdmin || (Auth::check() && $_SESSION['id'] == $p->user_id)): ?>
+                                <form method="POST"  onsubmit="return confirm('Delete?')">
+                                    <input type="hidden" name="action" value="delete">
+                                    <input type="hidden" name="type" value="post">
+                                    <input type="hidden" name="id" value="<?= $_GET['id'] ?>">
+                                    <button type="submit" style="color:red; cursor:pointer;">Delete</button>
+                                </form>
+<?php endif; ?>
 </div>
+
 
 <div class="container" id="comments">
 
@@ -56,9 +73,9 @@
                             <img class="minipfp" src="<?= $c->image ?>">
                             <h3>  <?= htmlspecialchars($c->username) ?>: </a> </h3>
                             <p class="content"><?= htmlspecialchars($c->content) ?></p>
-                            <?php if ($isAdmin): ?>
-                                <form method="POST"  onsubmit="return confirm('Naozaj vymazať?')">
-                                    <input type="hidden" name="action" value="delete">
+                            <?php if ($isAdmin || (Auth::check() && $_SESSION['id'] == $c->user_id)): ?>
+                                <form method="POST"  onsubmit="return confirm('Delete?')">
+                                    <input type="hidden" name="action" value="commentdel">
                                     <input type="hidden" name="type" value="post">
                                     <input type="hidden" name="id" value="<?php echo $c->id; ?>">
                                     <button type="submit" style="color:red; cursor:pointer;">Delete</button>
@@ -86,7 +103,7 @@
                             </form>
 
                     <?php endif; ?>
-\
+
         </div>
 
 

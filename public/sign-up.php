@@ -12,6 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
     $email = trim($_POST['email'] ?? '');
+    $image = $_POST['image'] ?? '../vault/default.png';
+    
     if(!$user->usernameValidation($username) && !$user->emailValidation($email)){
         if (isset($_FILES['image']) && $_FILES['image']['error'] === 0){
             $originalName = $_FILES['image']['name'];

@@ -25,7 +25,7 @@
         }
         $post->create($title, $content, $user_id, $image);
 
-        Rdirect::redirect('forum.php');
+        Redirect::redirect('forum.php');
         exit;
     }
 
